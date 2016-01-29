@@ -31,6 +31,7 @@ public class MainActivity extends ActivityBase implements ViewPager.OnPageChange
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
         binding.toolBar.inflateMenu(R.menu.main_menu);
+
         binding.toolBar.setOnMenuItemClickListener(item -> {
             switch (item.getItemId()) {
             case R.id.search_icon:

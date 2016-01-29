@@ -1,13 +1,27 @@
 package com.example.user.weather.model;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 
-@Data
 @AllArgsConstructor
-public class CityEntity {
-
+public class CityEntity extends EntitiyBase{
 
     private String title;
+
     private String id;
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getId() {
+        return id;
+    }
 }

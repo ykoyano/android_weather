@@ -1,13 +1,11 @@
 package com.example.user.weather.model;
 
-import android.databinding.Bindable;
 import lombok.AllArgsConstructor;
-
 
 import java.util.List;
 
 @AllArgsConstructor
-public class PrefectureEntity {
+public class PrefectureEntity extends EntitiyBase {
 
     private String title;
 
