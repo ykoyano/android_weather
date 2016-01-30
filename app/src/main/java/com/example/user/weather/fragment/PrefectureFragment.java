@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.example.user.weather.R;
+import      com.example.user.weather.R;
 import com.example.user.weather.adapter.PrefectureAdapter;
 import com.example.user.weather.databinding.FragmentPrefectureBinding;
 import com.example.user.weather.model.CityEntity;
