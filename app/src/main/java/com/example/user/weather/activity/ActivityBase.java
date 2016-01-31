@@ -5,6 +5,8 @@ import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.v7.app.AppCompatActivity;
+import com.example.user.weather.AndroidApplication;
+import com.example.user.weather.component.AppComponent;
 import com.trello.rxlifecycle.ActivityEvent;
 import com.trello.rxlifecycle.RxLifecycle;
 import icepick.Icepick;
@@ -18,6 +20,10 @@ public abstract class ActivityBase extends AppCompatActivity {
     protected <T extends AppCompatActivity, M extends ViewDataBinding> M bindContentView(T activity, @LayoutRes int layoutResId) {
         M binding = DataBindingUtil.setContentView(activity, layoutResId);
         return binding;
+    }
+
+    protected AppComponent getApplicationComponent() {
+        return ((AndroidApplication) getApplication()).getAppComponent();
     }
 
     protected final <T> Observable.Transformer<? super T, ? extends T> bindUntilEvent(ActivityEvent event) {

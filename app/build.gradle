@@ -79,7 +79,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:cardview-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
-    compile 'com.android.support:multidex:1.0.1'
+//    compile 'com.android.support:multidex:1.0.1'
     compile 'com.google.code.gson:gson:2.4'
     compile 'javax.validation:validation-api:1.0.0.GA'
     compile 'org.apache.commons:commons-lang3:3.4'

@@ -2,7 +2,6 @@ package com.example.user.weather.activity;
 
 
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -11,11 +10,9 @@ import android.util.Log;
 import com.example.user.weather.R;
 import com.example.user.weather.databinding.ActivityMainBinding;
 import com.example.user.weather.fragment.MainFragment;
-import com.example.user.weather.logic.WeatherLogic;
+import com.example.user.weather.logic.WeatherLogicTest;
 import com.example.user.weather.model.CityEntity;
-import com.example.user.weather.model.PrefectureEntity;
 import com.example.user.weather.model.WeatherModel;
-import icepick.State;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -73,7 +70,7 @@ public class MainActivity extends ActivityBase implements ViewPager.OnPageChange
             }
         };
 
-        WeatherLogic.getInstance()
+        WeatherLogicTest.getInstance()
                 .getWeather("200010")
                 .compose(bindToLifecycle())
                 .subscribeOn(Schedulers.newThread())

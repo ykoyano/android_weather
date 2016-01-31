@@ -4,9 +4,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.example.user.weather.R;
 import com.example.user.weather.databinding.FragmentMainBinding;
+import com.example.user.weather.logic.WeatherLogic;
 import com.example.user.weather.model.CityEntity;
+
+import javax.inject.Inject;
 
 public class MainFragment extends FragmentBase {
 
@@ -14,6 +16,11 @@ public class MainFragment extends FragmentBase {
 
     public MainFragment() {
     }
+
+//    @Inject
+//    WeatherLogic weatherLogic;
+
+    private FragmentMainBinding binding;
 
     public static MainFragment newInstance(CityEntity city) {
         Bundle args = new Bundle();
@@ -30,12 +37,13 @@ public class MainFragment extends FragmentBase {
 
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_main, container, false);
+        binding = FragmentMainBinding.inflate(inflater, container, false);
+        return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        final FragmentMainBinding binding = FragmentMainBinding.bind(view);
+        appComponent().inject(this);
     }
 }
