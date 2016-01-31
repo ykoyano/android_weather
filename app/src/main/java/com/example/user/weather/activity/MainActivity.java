@@ -11,10 +11,6 @@ import com.example.user.weather.R;
 import com.example.user.weather.databinding.ActivityMainBinding;
 import com.example.user.weather.fragment.MainFragment;
 import com.example.user.weather.model.CityEntity;
-import com.example.user.weather.model.WeatherModel;
-import rx.Observer;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 import java.util.ArrayList;
 import java.util.List;

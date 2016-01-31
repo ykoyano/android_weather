@@ -1,23 +1,22 @@
 package com.example.user.weather.logic;
 
 import com.example.user.weather.model.WeatherModel;
-import com.example.user.weather.request.Request;
-import com.example.user.weather.request.WeatherRequest;
+import com.example.user.weather.request.WeatherApi;
 import rx.Observable;
 
 import javax.inject.Inject;
 
-public class WeatherLogicImpl implements WeatherLogic{
+public class WeatherLogicImpl implements WeatherLogic {
+
+    private WeatherApi weatherApi;
 
     @Inject
-    public WeatherLogicImpl() {
+    public WeatherLogicImpl(WeatherApi weatherApi) {
+        this.weatherApi = weatherApi;
     }
 
     @Override
     public Observable<WeatherModel> getWeather(String city) {
-        return new Request()
-                .connection()
-                .create(WeatherRequest.class)
-                .getWeather(city);
+        return weatherApi.getWeather(city);
     }
 }
