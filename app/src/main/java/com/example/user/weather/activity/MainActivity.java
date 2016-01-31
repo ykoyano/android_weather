@@ -10,7 +10,6 @@ import android.util.Log;
 import com.example.user.weather.R;
 import com.example.user.weather.databinding.ActivityMainBinding;
 import com.example.user.weather.fragment.MainFragment;
-import com.example.user.weather.logic.WeatherLogicTest;
 import com.example.user.weather.model.CityEntity;
 import com.example.user.weather.model.WeatherModel;
 import rx.Observer;
@@ -52,30 +51,6 @@ public class MainActivity extends ActivityBase implements ViewPager.OnPageChange
         binding.viewPager.setAdapter(makeFragmentPagerAdapter());
         binding.viewPager.addOnPageChangeListener(this);
         binding.tabLayout.setupWithViewPager(binding.viewPager);
-
-        Observer observer = new Observer<WeatherModel>() {
-
-            @Override
-            public void onCompleted() {
-                Log.d(TAG, "onCompleted()");
-            }
-
-            @Override
-            public void onError(Throwable e) {
-            }
-
-            @Override
-            public void onNext(WeatherModel weatherModel) {
-
-            }
-        };
-
-        WeatherLogicTest.getInstance()
-                .getWeather("200010")
-                .compose(bindToLifecycle())
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(observer);
     }
 
     @Override

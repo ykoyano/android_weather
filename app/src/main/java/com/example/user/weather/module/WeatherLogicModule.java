@@ -12,7 +12,7 @@ public class WeatherLogicModule {
 
     @Singleton
     @Provides
-    public WeatherLogic provideWeatherLogic(WeatherLogicImpl weatherLogic) {
-        return weatherLogic;
+    public WeatherLogic provideWeatherLogic() {
+        return new WeatherLogicImpl();
     }
 }
