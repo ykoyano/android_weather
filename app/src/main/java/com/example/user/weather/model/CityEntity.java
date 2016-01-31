@@ -3,7 +3,7 @@ package com.example.user.weather.model;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public class CityEntity extends EntitiyBase{
+public class CityEntity extends EntityBase {
 
     private String title;
 

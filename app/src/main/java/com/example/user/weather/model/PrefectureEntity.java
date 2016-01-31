@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import java.util.List;
 
 @AllArgsConstructor
-public class PrefectureEntity extends EntitiyBase {
+public class PrefectureEntity extends EntityBase {
 
     private String title;
 
