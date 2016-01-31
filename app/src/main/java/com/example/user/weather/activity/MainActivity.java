@@ -13,6 +13,7 @@ import com.example.user.weather.databinding.ActivityMainBinding;
 import com.example.user.weather.fragment.MainFragment;
 import com.example.user.weather.logic.WeatherLogic;
 import com.example.user.weather.model.CityEntity;
+import com.example.user.weather.model.PrefectureEntity;
 import com.example.user.weather.model.WeatherModel;
 import icepick.State;
 import rx.Observer;
@@ -22,14 +23,13 @@ import rx.schedulers.Schedulers;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class MainActivity extends ActivityBase implements ViewPager.OnPageChangeListener {
+public class MainActivity extends ActivityBase implements ViewPager.OnPageChangeListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
     private ActivityMainBinding binding;
-
-    @State
-    private List<CityEntity> cities;
+    
+    List<CityEntity> cities;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

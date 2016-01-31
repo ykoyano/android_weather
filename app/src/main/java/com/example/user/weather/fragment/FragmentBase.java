@@ -9,7 +9,7 @@ import icepick.Icepick;
 import rx.Observable;
 import rx.subjects.BehaviorSubject;
 
-public class FragmentBase extends Fragment {
+public abstract class FragmentBase extends Fragment {
 
     private final BehaviorSubject<FragmentEvent> lifecycle = BehaviorSubject.create();
 
