@@ -37,7 +37,7 @@ public class MainActivity extends ActivityBase implements ViewPager.OnPageChange
 
         setContentView(R.layout.activity_main);
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        binding = bindContentView(this, R.layout.activity_main);
 
         binding.toolBar.inflateMenu(R.menu.main_menu);
 

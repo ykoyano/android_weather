@@ -22,7 +22,7 @@ public class SearchActivity extends ActivityBase {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_search);
+        binding = bindContentView(this, R.layout.activity_search);
 
         if (savedInstanceState == null) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
