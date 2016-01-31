@@ -33,16 +33,20 @@ public class NetworkModule {
     @Singleton
     @Provides
     public WeatherApi provideWeatherApi() {
-        Gson gson = new GsonBuilder()
+        return restAdapter(END_POINT).build().create(WeatherApi.class);
+    }
+
+    private Retrofit.Builder restAdapter(final String endpoint) {
+        return new Retrofit.Builder()
+                .baseUrl(endpoint)
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson()));
+    }
+
+    private Gson gson() {
+        return new GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                 .registerTypeAdapter(Date.class, new DateTypeAdapter())
                 .create();
-
-        return  new Retrofit.Builder()
-                .baseUrl(END_POINT)
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build()
-                .create(WeatherApi.class);
     }
 }
