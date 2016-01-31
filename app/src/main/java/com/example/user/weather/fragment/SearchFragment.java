@@ -2,6 +2,7 @@ package com.example.user.weather.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,8 @@ import com.example.user.weather.databinding.FragmentSearchBinding;
 public class SearchFragment extends FragmentBase {
 
     public static final String TAG = SearchFragment.class.getSimpleName();
+
+    private SearchView searchView;
 
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
@@ -22,12 +25,23 @@ public class SearchFragment extends FragmentBase {
         super.onViewCreated(view, savedInstanceState);
         final FragmentSearchBinding binding = FragmentSearchBinding.bind(view);
 
-        binding.listView.setOnItemClickListener((parent, listenerView, position, id) -> {
+        binding.toolBar.inflateMenu(R.menu.search);
+        searchView = (SearchView) binding.toolBar.getMenu().findItem(R.id.menu_search).getActionView();
+
+        binding.selectArea.setOnClickListener(v -> {
             FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
             PrefectureFragment prefectureFragment = new PrefectureFragment();
             transaction.replace(R.id.fragment_container, prefectureFragment, PrefectureFragment.TAG);
             transaction.addToBackStack(PrefectureFragment.TAG);
             transaction.commit();
         });
+
+        binding.currentLocation.setOnClickListener(v -> {
+        });
+
+        binding.listView.setOnItemClickListener((parent, listenerView, position, id) -> {
+        });
+
     }
+
 }

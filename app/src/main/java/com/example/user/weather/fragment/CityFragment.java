@@ -1,12 +1,15 @@
 package com.example.user.weather.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.example.user.weather.R;
+import com.example.user.weather.activity.MainActivity;
 import com.example.user.weather.adapter.CityAdapter;
 import com.example.user.weather.databinding.FragmentCityBinding;
+import com.example.user.weather.model.CityEntity;
 import com.example.user.weather.model.PrefectureEntity;
 
 public class CityFragment extends FragmentBase{
@@ -31,10 +34,15 @@ public class CityFragment extends FragmentBase{
         super.onViewCreated(view, savedInstanceState);
         final FragmentCityBinding binding = FragmentCityBinding.bind(view);
 
+//        binding.toolBar.inflateMenu(R.menu.search);
+
         CityAdapter cityAdapter = new CityAdapter(getContext().getApplicationContext());
         cityAdapter.addAll(this.prefectureEntity.getCities());
         binding.listView.setAdapter(cityAdapter);
         binding.listView.setOnItemClickListener((parent, listenerView, position, id) -> {
+            Intent intent = new Intent(getActivity(), MainActivity.class);
+            intent.putExtra("city", (CityEntity) parent.getItemAtPosition((int) id));
+            startActivity(intent);
         });
     }
 }

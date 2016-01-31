@@ -33,6 +33,8 @@ public class PrefectureFragment extends FragmentBase{
         super.onViewCreated(view, savedInstanceState);
         final FragmentPrefectureBinding binding = FragmentPrefectureBinding.bind(view);
 
+//        binding.toolBar.inflateMenu(R.menu.search);
+
         PrefectureAdapter prefectureAdapter = new PrefectureAdapter(getContext().getApplicationContext());
         prefectureAdapter.addAll(getTestData());
         binding.listView.setAdapter(prefectureAdapter);

@@ -15,8 +15,6 @@ public class SearchActivity extends ActivityBase {
 
     private ActivitySearchBinding binding;
 
-    private SearchView searchView;
-
     private SearchFragment searchFragment;
 
     @Override
@@ -32,8 +30,6 @@ public class SearchActivity extends ActivityBase {
             transaction.commit();
         }
 
-        binding.toolBar.inflateMenu(R.menu.search);
-        searchView = (SearchView) binding.toolBar.getMenu().findItem(R.id.menu_search).getActionView();
     }
 }
 

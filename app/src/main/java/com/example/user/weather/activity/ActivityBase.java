@@ -4,10 +4,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import com.trello.rxlifecycle.ActivityEvent;
 import com.trello.rxlifecycle.RxLifecycle;
+import icepick.Icepick;
 import rx.Observable;
 import rx.subjects.BehaviorSubject;
 
-public class ActivityBase extends AppCompatActivity {
+public abstract class ActivityBase extends AppCompatActivity {
 
     private final BehaviorSubject<ActivityEvent> lifecycle = BehaviorSubject.create();
 
@@ -22,6 +23,13 @@ public class ActivityBase extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Icepick.restoreInstanceState(this, savedInstanceState);
         lifecycle.onNext(ActivityEvent.CREATE);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Icepick.saveInstanceState(this, outState);
     }
 }
