@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.example.user.weather.databinding.FragmentMainBinding;
+import com.example.user.weather.logic.MyCityLogic;
+import com.example.user.weather.logic.TargetCityLogic;
 import com.example.user.weather.logic.WeatherLogic;
 import com.example.user.weather.model.CityEntity;
 import com.example.user.weather.model.WeatherModel;
@@ -24,6 +26,12 @@ public class MainFragment extends FragmentBase {
 
     @Inject
     WeatherLogic weatherLogic;
+
+    @Inject
+    MyCityLogic myCityLogic;
+
+    @Inject
+    TargetCityLogic targetCityLogic;
 
     private FragmentMainBinding binding;
 
