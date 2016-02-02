@@ -3,17 +3,17 @@ package com.example.user.weather.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.List;
 
 @Data
-public class WeatherModel {
+@EqualsAndHashCode(callSuper=false)
+public class WeatherEntity<T> extends EntityBase {
 
     @Expose
-    @SerializedName("pinpointLocations")
-    private List<PinpointLocations> pinpointLocations;
+    private String dt;
 
     @Expose
-    @SerializedName("link")
-    private String link;
+    private T main;
 }

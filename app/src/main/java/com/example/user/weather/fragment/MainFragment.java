@@ -6,14 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.example.user.weather.databinding.FragmentMainBinding;
-import com.example.user.weather.logic.GeoCodeLogic;
 import com.example.user.weather.logic.GeoLogic;
 import com.example.user.weather.logic.MyCityLogic;
 import com.example.user.weather.logic.TargetCityLogic;
 import com.example.user.weather.logic.WeatherLogic;
 import com.example.user.weather.model.CityEntity;
 import com.example.user.weather.model.GeoEntity;
-import com.example.user.weather.model.WeatherModel;
+import com.example.user.weather.model.InformationEntity;
+import com.example.user.weather.model.MainEntity;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -36,9 +36,6 @@ public class MainFragment extends FragmentBase {
 
     @Inject
     TargetCityLogic targetCityLogic;
-
-    @Inject
-    GeoCodeLogic geoCodeLogic;
 
     @Inject
     GeoLogic geoLogic;
@@ -83,9 +80,6 @@ public class MainFragment extends FragmentBase {
 
             @Override
             public void onNext(List<GeoEntity> cities) {
-                for (GeoEntity  city: cities) {
-                    Log.d(TAG, city.getCity());
-                }
             }
         };
 
@@ -94,5 +88,31 @@ public class MainFragment extends FragmentBase {
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
+
+
+        Observer observer_2 = new Observer<InformationEntity<MainEntity>>() {
+
+            @Override
+            public void onCompleted() {
+                Log.d(TAG, "onCompleted()");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.d(TAG, "onError()");
+            }
+
+            @Override
+            public void onNext(InformationEntity information) {
+            }
+        };
+
+        double x = 34.966671;
+        double y = 138.933334;
+        weatherLogic.getWeather(x, y)
+                .compose(bindToLifecycle())
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer_2);
     }
 }

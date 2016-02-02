@@ -4,8 +4,8 @@
 
     <data>
         <variable
-                name="WeatherModel"
-                type="com.example.user.weather.model.WeatherModel" />
+                name="WeatherEntity"
+                type="com.example.user.weather.model.WeatherEntity" />
     </data>
 
     <RelativeLayout android:layout_width="match_parent"
