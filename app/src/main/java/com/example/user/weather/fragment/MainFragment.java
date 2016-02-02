@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.example.user.weather.databinding.FragmentMainBinding;
+import com.example.user.weather.logic.GeoCodeLogic;
 import com.example.user.weather.logic.MyCityLogic;
 import com.example.user.weather.logic.TargetCityLogic;
 import com.example.user.weather.logic.WeatherLogic;
@@ -32,6 +33,9 @@ public class MainFragment extends FragmentBase {
 
     @Inject
     TargetCityLogic targetCityLogic;
+
+    @Inject
+    GeoCodeLogic geoCodeLogic;
 
     private FragmentMainBinding binding;
 

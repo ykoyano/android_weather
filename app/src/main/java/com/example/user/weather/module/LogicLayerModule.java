@@ -2,12 +2,15 @@ package com.example.user.weather.module;
 
 import com.example.user.weather.Repository.MyCityRepositoryImpl;
 import com.example.user.weather.Repository.TargetCityRepositoryImpl;
+import com.example.user.weather.logic.GeoCodeLogic;
+import com.example.user.weather.logic.GeoCodeLogicImpl;
 import com.example.user.weather.logic.MyCityLogic;
 import com.example.user.weather.logic.MyCityLogicImpl;
 import com.example.user.weather.logic.TargetCityLogic;
 import com.example.user.weather.logic.TargetCityLogicImpl;
 import com.example.user.weather.logic.WeatherLogic;
 import com.example.user.weather.logic.WeatherLogicImpl;
+import com.example.user.weather.request.GeoCodingApi;
 import com.example.user.weather.request.WeatherApi;
 
 import dagger.Module;
@@ -22,6 +25,12 @@ public class LogicLayerModule {
     @Provides
     public WeatherLogic provideWeatherLogic(WeatherApi weatherApi) {
         return new WeatherLogicImpl(weatherApi);
+    }
+
+    @Singleton
+    @Provides
+    public GeoCodeLogic provideGeoCodeLogicImpl(GeoCodingApi geoCodingApi) {
+        return new GeoCodeLogicImpl(geoCodingApi);
     }
 
     @Singleton

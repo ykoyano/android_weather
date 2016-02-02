@@ -1,5 +1,6 @@
 package com.example.user.weather.module;
 
+import com.example.user.weather.request.GeoCodingApi;
 import com.example.user.weather.request.WeatherApi;
 
 import com.google.gson.FieldNamingPolicy;
@@ -11,6 +12,7 @@ import dagger.Provides;
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
 import retrofit.RxJavaCallAdapterFactory;
+import retrofit.SimpleXmlConverterFactory;
 
 import javax.inject.Singleton;
 import java.util.Date;
@@ -19,6 +21,8 @@ import java.util.Date;
 public class NetworkModule {
 
     private static final String END_POINT = "http://weather.livedoor.com";
+
+    private static final String YAHOO_END_POINT = "http://geo.search.olp.yahooapis.jp";
 
 //    @Provides
 //    public WeatherRequestImpl provideWeatherRequestImpl(Request request) {
@@ -33,20 +37,28 @@ public class NetworkModule {
     @Singleton
     @Provides
     public WeatherApi provideWeatherApi() {
-        return restAdapter(END_POINT).build().create(WeatherApi.class);
+        return restAdapter(END_POINT)
+                .addConverterFactory(GsonConverterFactory.create(gson()))
+                .build()
+                .create(WeatherApi.class);
+    }
+
+    @Singleton
+    @Provides
+    public GeoCodingApi provideGeoCodingApi() {
+        return restAdapter(YAHOO_END_POINT)
+                .addConverterFactory(SimpleXmlConverterFactory.create())
+                .build()
+                .create(GeoCodingApi.class);
     }
 
     private Retrofit.Builder restAdapter(final String endpoint) {
-        return new Retrofit.Builder()
-                .baseUrl(endpoint)
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create(gson()));
+        return new Retrofit.Builder().baseUrl(endpoint)
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create());
     }
 
     private Gson gson() {
         return new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .registerTypeAdapter(Date.class, new DateTypeAdapter())
-                .create();
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).registerTypeAdapter(Date.class, new DateTypeAdapter()).create();
     }
 }
