@@ -5,7 +5,7 @@
     <data>
         <variable
                 name="WeatherEntity"
-                type="com.example.user.weather.model.WeatherEntity" />
+                type="com.example.user.weather.model.weather.WeatherEntity" />
     </data>
 
     <RelativeLayout

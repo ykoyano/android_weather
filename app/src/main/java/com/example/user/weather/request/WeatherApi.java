@@ -1,6 +1,6 @@
 package com.example.user.weather.request;
 
-import com.example.user.weather.model.InformationEntity;
+import com.example.user.weather.model.weather.InformationEntity;
 import retrofit.http.GET;
 import retrofit.http.Headers;
 import retrofit.http.Query;
@@ -15,5 +15,5 @@ public interface WeatherApi {
     Observable<InformationEntity> getWeather(@Query("lat") final double lat, @Query("lon") final double lon, @Query("appid") final String appId);
 
     @GET("/data/2.5/forecast/daily")
-    Observable<InformationEntity> getWeatherWeek(@Query("lat") final double lat, @Query("lon") final double lon);
+    Observable<InformationEntity> getWeatherWeek(@Query("lat") final double lat, @Query("lon") final double lon, @Query("appid") final String appId);
 }
