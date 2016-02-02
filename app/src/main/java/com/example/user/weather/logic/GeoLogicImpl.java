@@ -1,5 +1,6 @@
 package com.example.user.weather.logic;
 
+import com.example.user.weather.model.GeoEntity;
 import com.example.user.weather.request.GeoApi;
 import rx.Observable;
 
@@ -20,7 +21,17 @@ public class GeoLogicImpl implements GeoLogic {
     }
 
     @Override
-    public Observable<List<String>> getCities(String prefecture) {
+    public Observable<List<GeoEntity>> getCities(String prefecture) {
         return api.getCities(GET_CITIES, prefecture);
+    }
+
+    @Override
+    public Observable<List<GeoEntity>> getAddressByCoordinate(double lon, double lat) {
+        return api.getAddressByCoordinate(SEARCH_BY_LOCATION, lon, lat);
+    }
+
+    @Override
+    public Observable<List<GeoEntity>> getAddressByKeyword(String matching, String keyword) {
+        return api.getAddressByKeyword(SUGGEST, matching, keyword);
     }
 }

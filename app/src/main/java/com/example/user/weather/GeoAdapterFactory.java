@@ -13,6 +13,9 @@ import java.io.IOException;
 
 public class GeoAdapterFactory implements TypeAdapterFactory {
 
+    private static final String RESPONSE = "response";
+    private static final String LOCATION = "location";
+
     @Override
     public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
         final TypeAdapter<T> delegate = gson.getDelegateAdapter(this, type);
@@ -34,16 +37,15 @@ public class GeoAdapterFactory implements TypeAdapterFactory {
     }
 
     private JsonElement getTargetElement(JsonElement element) {
+
         if (!element.isJsonObject()) {
             return element;
         }
 
         JsonObject obj = element.getAsJsonObject();
 
-        if (obj.has("response")) {
-            return obj.get("response");
-        } else if (obj.has("location")) {
-            return obj.get("location");
+        if (obj.has(RESPONSE) && obj.get(RESPONSE).getAsJsonObject().has(LOCATION)) {
+            return obj.get(RESPONSE).getAsJsonObject().get(LOCATION);
         } else {
             return element;
         }

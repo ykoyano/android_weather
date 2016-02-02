@@ -26,7 +26,7 @@ public class NetworkModule {
 
     private static final String YAHOO_END_POINT = "http://geo.search.olp.yahooapis.jp";
 
-    private static final String GEO_END_POINT = "http://geoapi.heartrails.com/api/json";
+    private static final String GEO_END_POINT = "http://geoapi.heartrails.com";
 
 
 //    @Provides

@@ -12,12 +12,14 @@ import com.example.user.weather.logic.MyCityLogic;
 import com.example.user.weather.logic.TargetCityLogic;
 import com.example.user.weather.logic.WeatherLogic;
 import com.example.user.weather.model.CityEntity;
+import com.example.user.weather.model.GeoEntity;
 import com.example.user.weather.model.WeatherModel;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 import javax.inject.Inject;
+import java.util.List;
 
 public class MainFragment extends FragmentBase {
 
@@ -67,7 +69,7 @@ public class MainFragment extends FragmentBase {
         super.onViewCreated(view, savedInstanceState);
         appComponent().inject(this);
 
-        Observer observer = new Observer<WeatherModel>() {
+        Observer observer = new Observer<List<GeoEntity>>() {
 
             @Override
             public void onCompleted() {
@@ -76,15 +78,18 @@ public class MainFragment extends FragmentBase {
 
             @Override
             public void onError(Throwable e) {
+                Log.d(TAG, "onError()");
             }
 
             @Override
-            public void onNext(WeatherModel weatherModel) {
-
+            public void onNext(List<GeoEntity> cities) {
+                for (GeoEntity  city: cities) {
+                    Log.d(TAG, city.getCity());
+                }
             }
         };
 
-        weatherLogic.getWeather("200010")
+        geoLogic.getCities("東京都")
                 .compose(bindToLifecycle())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
