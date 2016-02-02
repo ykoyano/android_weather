@@ -7,6 +7,10 @@ import java.util.List;
 
 public interface GeoLogic {
 
+    Observable<List<String>> getAreas(String method);
+
+    Observable<List<String>> getPrefectures(String method, String area);
+
     Observable<List<GeoEntity>> getCities(String prefecture);
 
     Observable<List<GeoEntity >> getAddressByCoordinate(double lon, double lat);

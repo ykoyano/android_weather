@@ -15,6 +15,8 @@ public class GeoAdapterFactory implements TypeAdapterFactory {
 
     private static final String RESPONSE = "response";
     private static final String LOCATION = "location";
+    private static final String PREFECTURE = "prefecture";
+    private static final String AREA = "area";
 
     @Override
     public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
@@ -44,11 +46,18 @@ public class GeoAdapterFactory implements TypeAdapterFactory {
 
         JsonObject obj = element.getAsJsonObject();
 
-        if (obj.has(RESPONSE) && obj.get(RESPONSE).getAsJsonObject().has(LOCATION)) {
-            return obj.get(RESPONSE).getAsJsonObject().get(LOCATION);
-        } else {
-            return element;
+        if (obj.has(RESPONSE)) {
+            JsonObject response = obj.get(RESPONSE).getAsJsonObject();
+            if (response.has(AREA)) {
+                return response.get(AREA);
+            } else if (response.has(PREFECTURE)) {
+                return response.get(PREFECTURE);
+            } else if (response.has(LOCATION)) {
+                return response.get(LOCATION);
+            }
         }
+
+        return element;
     }
 
 }

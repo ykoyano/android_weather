@@ -21,6 +21,16 @@ public class GeoLogicImpl implements GeoLogic {
     }
 
     @Override
+    public Observable<List<String>> getAreas(String method){
+        return api.getAreas(method);
+    }
+
+    @Override
+    public Observable<List<String>> getPrefectures(String method, String area){
+        return api.getPrefectures(method, area);
+    }
+
+    @Override
     public Observable<List<GeoEntity>> getCities(String prefecture) {
         return api.getCities(GET_CITIES, prefecture);
     }

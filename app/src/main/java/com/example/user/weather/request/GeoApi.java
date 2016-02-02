@@ -10,6 +10,12 @@ import java.util.List;
 public interface GeoApi {
 
     @GET("/api/json")
+    Observable<List<String>> getAreas(@Query("method") final String method);
+
+    @GET("/api/json")
+    Observable<List<String>> getPrefectures(@Query("method") final String method, @Query("area") final String area);
+
+    @GET("/api/json")
     Observable<List<GeoEntity>> getCities(@Query("method") final String method, @Query("prefecture") final String prefecture);
 
     @GET("/api/json")
