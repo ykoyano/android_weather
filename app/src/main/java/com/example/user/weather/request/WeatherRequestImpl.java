@@ -16,6 +16,6 @@
 //
 //    @Override
 //    public Observable<WeatherModel> get(String city) {
-//         return request.connection().create(WeatherApi.class).getWeather(city);
+//         return request.connection().create(WeatherApi.class).get(city);
 //    }
 //}

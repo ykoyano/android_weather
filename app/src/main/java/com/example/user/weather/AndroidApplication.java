@@ -1,11 +1,11 @@
 package com.example.user.weather;
 
-import android.app.Application;
+import android.support.multidex.MultiDexApplication;
 import com.example.user.weather.component.AppComponent;
 import com.example.user.weather.component.DaggerAppComponent;
 import com.example.user.weather.module.AppModule;
 
-public class AndroidApplication extends Application {
+public class AndroidApplication extends MultiDexApplication {
 
     private static AppComponent component;
 
