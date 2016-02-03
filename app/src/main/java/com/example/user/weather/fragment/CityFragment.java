@@ -79,7 +79,7 @@ public class CityFragment extends FragmentBase {
 
             @Override
             public void onNext(List<Location> locations) {
-                locationLogic.save(locations.get(0));
+//                locationLogic.save(locations.get(0));
                 Intent intent = new Intent(getActivity(), MainActivity.class);
                 intent.putExtra(KEY_LOCATION, locations.get(0));
                 startActivity(intent);

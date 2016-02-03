@@ -34,7 +34,7 @@ public class MainFragment extends FragmentBase {
     }
 
     @State
-    Location geo;
+    Location location;
 
     @Inject
     WeatherLogic weatherLogic;
@@ -46,9 +46,9 @@ public class MainFragment extends FragmentBase {
 
     private FragmentMainBinding binding;
 
-    public static MainFragment newInstance(Location geo) {
+    public static MainFragment newInstance(Location location) {
         Bundle args = new Bundle();
-        args.putSerializable(KEY_LOCATION, geo);
+        args.putSerializable(KEY_LOCATION, location);
         MainFragment fragment = new MainFragment();
         fragment.setArguments(args);
         return fragment;
@@ -57,7 +57,7 @@ public class MainFragment extends FragmentBase {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.geo = (Location) getArguments().getSerializable(KEY_LOCATION);
+        this.location = (Location) getArguments().getSerializable(KEY_LOCATION);
     }
 
     @Override
@@ -79,14 +79,24 @@ public class MainFragment extends FragmentBase {
         binding.recyclerView.setAdapter(adapter);
         binding.recyclerView.setHasFixedSize(true);
 
+        getWeather();
+
+        HashSet<Date> events = new HashSet<>();
+        events.add(new Date());
+        binding.calendarView.updateCalendar(events);
+    }
+
+    private void getWeather(){
         Observer observer = new Observer<InformationEntity<MainEntity>>() {
 
             @Override
             public void onCompleted() {
+
             }
 
             @Override
             public void onError(Throwable e) {
+
             }
 
             @Override
@@ -98,15 +108,11 @@ public class MainFragment extends FragmentBase {
             }
         };
 
-        weatherLogic.getWeather(geo.getLon(), geo.getLat())
+        weatherLogic.getWeather(location.getLon(), location.getLat())
                 .compose(bindToLifecycle())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
-
-        HashSet<Date> events = new HashSet<>();
-        events.add(new Date());
-        binding.calendarView.updateCalendar(events);
     }
 
     private void getAddressByCoordinate(InformationEntity<MainEntity> information){
@@ -133,6 +139,5 @@ public class MainFragment extends FragmentBase {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
     }
-
 }
 
