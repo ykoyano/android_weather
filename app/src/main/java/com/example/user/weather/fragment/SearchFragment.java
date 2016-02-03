@@ -1,12 +1,13 @@
 package com.example.user.weather.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.example.user.weather.R;
+import com.example.user.weather.activity.SelectActivity;
 import com.example.user.weather.databinding.FragmentSearchBinding;
 
 public class SearchFragment extends FragmentBase {
@@ -29,11 +30,8 @@ public class SearchFragment extends FragmentBase {
         searchView = (SearchView) binding.toolBar.getMenu().findItem(R.id.menu_search).getActionView();
 
         binding.selectArea.setOnClickListener(v -> {
-            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-            AreaFragment areaFragment = new AreaFragment();
-            transaction.replace(R.id.fragment_container, areaFragment, AreaFragment.TAG);
-            transaction.addToBackStack(AreaFragment.TAG);
-            transaction.commit();
+            Intent intent = new Intent(getActivity(), SelectActivity.class);
+            startActivity(intent);
         });
 
         binding.currentLocation.setOnClickListener(v -> {
