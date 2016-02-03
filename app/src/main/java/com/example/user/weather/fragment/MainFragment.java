@@ -42,7 +42,7 @@ public class MainFragment extends FragmentBase {
     @Inject
     LocationLogic locationLogic;
 
-    private WeatherRecycleAdapter<MainEntity> adapter;
+    private WeatherRecycleAdapter adapter;
 
     private FragmentMainBinding binding;
 
@@ -71,7 +71,7 @@ public class MainFragment extends FragmentBase {
         binding = FragmentMainBinding.bind(view);
         appComponent().inject(this);
 
-        this.adapter = new WeatherRecycleAdapter<>(new ArrayList<>());
+        this.adapter = new WeatherRecycleAdapter(new ArrayList<>());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         layoutManager.scrollToPosition(0);
@@ -87,7 +87,7 @@ public class MainFragment extends FragmentBase {
     }
 
     private void getWeather(){
-        Observer observer = new Observer<InformationEntity<MainEntity>>() {
+        Observer observer = new Observer<InformationEntity>() {
 
             @Override
             public void onCompleted() {
@@ -100,7 +100,7 @@ public class MainFragment extends FragmentBase {
             }
 
             @Override
-            public void onNext(InformationEntity<MainEntity> information) {
+            public void onNext(InformationEntity information) {
                 getAddressByCoordinate(information);
                 binding.setInformation(information);
                 adapter.addAllItem(information.getList());
@@ -115,7 +115,7 @@ public class MainFragment extends FragmentBase {
                 .subscribe(observer);
     }
 
-    private void getAddressByCoordinate(InformationEntity<MainEntity> information){
+    private void getAddressByCoordinate(InformationEntity information){
 
         Observer observer = new Observer<List<Location>>() {
 

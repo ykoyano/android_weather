@@ -6,24 +6,24 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class InformationEntity<T> extends EntityBase {
+public class InformationEntity extends EntityBase {
 
     @Expose
     private ApiCityEntity city;
 
     @Expose
     @SerializedName("list")
-    private List<WeatherEntity<T>> list;
+    private List<WeatherEntity> list;
 
     public void setCity(ApiCityEntity city) {
         this.city = city;
     }
 
-    public void setList(List<WeatherEntity<T>> list) {
+    public void setList(List<WeatherEntity> list) {
         this.list = list;
     }
 
-    public List<WeatherEntity<T>> getList() {
+    public List<WeatherEntity> getList() {
         return list;
     }
 

@@ -11,15 +11,17 @@ import com.example.user.weather.model.weather.WeatherEntity;
 
 import java.util.List;
 
-public class WeatherRecycleAdapter<T> extends RecyclerView.Adapter<WeatherRecycleAdapter.BindingHolder> {
+public class WeatherRecycleAdapter extends RecyclerView.Adapter<WeatherRecycleAdapter.BindingHolder> {
 
-    private List<WeatherEntity<T>> weathers;
+    private static final double KELVIN = 273.15;
 
-    public WeatherRecycleAdapter(List<WeatherEntity<T>> weathers) {
+    private List<WeatherEntity> weathers;
+
+    public WeatherRecycleAdapter(List<WeatherEntity> weathers) {
         this.weathers = weathers;
     }
 
-    public void addAllItem(List<WeatherEntity<T>> weathers){
+    public void addAllItem(List<WeatherEntity> weathers){
         this.weathers.addAll(weathers);
     }
 
@@ -31,8 +33,9 @@ public class WeatherRecycleAdapter<T> extends RecyclerView.Adapter<WeatherRecycl
 
     @Override
     public void onBindViewHolder(BindingHolder holder, int position) {
-        final WeatherEntity<T> weather = weathers.get(position);
+        final WeatherEntity weather = weathers.get(position);
         holder.getBinding().setWeather(weather);
+        holder.getBinding().weatherTemp.setText(String.valueOf(weather.getMain().getTemp() - KELVIN));
         holder.getBinding().executePendingBindings();
     }
 
