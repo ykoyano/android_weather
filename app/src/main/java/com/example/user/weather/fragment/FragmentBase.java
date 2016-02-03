@@ -2,6 +2,7 @@ package com.example.user.weather.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.View;
 import com.example.user.weather.AndroidApplication;
 import com.example.user.weather.component.AppComponent;
 import com.trello.rxlifecycle.FragmentEvent;
@@ -31,6 +32,10 @@ public abstract class FragmentBase extends Fragment {
         super.onCreate(savedInstanceState);
         Icepick.restoreInstanceState(this, savedInstanceState);
         lifecycle.onNext(FragmentEvent.CREATE);
+    }
+
+    @Override
+    public void onViewCreated(final View view, final Bundle savedInstanceState) {
     }
 
     @Override

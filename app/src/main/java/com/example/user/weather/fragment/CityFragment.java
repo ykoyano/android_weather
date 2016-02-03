@@ -5,23 +5,42 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import com.example.user.weather.R;
 import com.example.user.weather.activity.MainActivity;
-import com.example.user.weather.adapter.CityAdapter;
 import com.example.user.weather.databinding.FragmentCityBinding;
-import com.example.user.weather.model.CityEntity;
-import com.example.user.weather.model.PrefectureEntity;
+import com.example.user.weather.logic.GeoLogic;
+import com.example.user.weather.model.GeoEntity;
+import icepick.State;
+import rx.Observable;
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
-public class CityFragment extends FragmentBase{
+import javax.inject.Inject;
+
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
+
+public class CityFragment extends FragmentBase {
 
     public static final String TAG = CityFragment.class.getSimpleName();
 
-    private PrefectureEntity prefectureEntity;
+    @Inject
+    GeoLogic geoLogic;
+
+    @State
+    String area;
+
+    @State
+    String prefecture;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.prefectureEntity = (PrefectureEntity) getArguments().get("prefecture");
+        this.area = (String) getArguments().get("area");
+        this.prefecture = (String) getArguments().get("prefecture");
     }
 
     @Override
@@ -33,16 +52,37 @@ public class CityFragment extends FragmentBase{
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         final FragmentCityBinding binding = FragmentCityBinding.bind(view);
+        appComponent().inject(this);
 
-//        binding.toolBar.inflateMenu(R.menu.search);
+        Observer observer = new Observer<List<GeoEntity>>() {
 
-        CityAdapter cityAdapter = new CityAdapter(getContext().getApplicationContext());
-        cityAdapter.addAll(this.prefectureEntity.getCities());
-        binding.listView.setAdapter(cityAdapter);
+            @Override
+            public void onCompleted() {
+            }
+
+            @Override
+            public void onError(Throwable e) {
+            }
+
+            @Override
+            public void onNext(List<GeoEntity> geos) {
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext().getApplicationContext(), android.R.layout.simple_list_item_1, distinct(geos));
+                binding.listView.setAdapter(adapter);
+            }
+        };
+
+        geoLogic.getCities(area, prefecture).compose(bindToLifecycle()).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).subscribe(observer);
+
         binding.listView.setOnItemClickListener((parent, listenerView, position, id) -> {
             Intent intent = new Intent(getActivity(), MainActivity.class);
-            intent.putExtra("city", (CityEntity) parent.getItemAtPosition((int) id));
+            intent.putExtra("city", (String) parent.getItemAtPosition((int) id));
             startActivity(intent);
         });
+    }
+
+    private ArrayList<String> distinct(List<GeoEntity> slist) {
+        List<String> cities = Observable.from(slist).map(GeoEntity::getCity).toList().toBlocking().single();
+        LinkedHashSet<String> set = new LinkedHashSet<>(cities);
+        return new ArrayList<>(set);
     }
 }

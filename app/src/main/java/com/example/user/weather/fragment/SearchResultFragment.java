@@ -1,12 +1,11 @@
 package com.example.user.weather.fragment;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.example.user.weather.R;
-import com.example.user.weather.databinding.FragmentSearchResultBinding;
+
 
 public class SearchResultFragment extends FragmentBase{
 

@@ -30,9 +30,9 @@ public class SearchFragment extends FragmentBase {
 
         binding.selectArea.setOnClickListener(v -> {
             FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-            PrefectureFragment prefectureFragment = new PrefectureFragment();
-            transaction.replace(R.id.fragment_container, prefectureFragment, PrefectureFragment.TAG);
-            transaction.addToBackStack(PrefectureFragment.TAG);
+            AreaFragment areaFragment = new AreaFragment();
+            transaction.replace(R.id.fragment_container, areaFragment, AreaFragment.TAG);
+            transaction.addToBackStack(AreaFragment.TAG);
             transaction.commit();
         });
 
@@ -41,7 +41,6 @@ public class SearchFragment extends FragmentBase {
 
         binding.listView.setOnItemClickListener((parent, listenerView, position, id) -> {
         });
-
     }
 
 }

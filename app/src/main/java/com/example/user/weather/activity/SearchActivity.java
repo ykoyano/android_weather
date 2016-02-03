@@ -1,9 +1,7 @@
 package com.example.user.weather.activity;
 
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.SearchView;
 
 import com.example.user.weather.R;
 import com.example.user.weather.databinding.ActivitySearchBinding;

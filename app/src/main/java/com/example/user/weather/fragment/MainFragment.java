@@ -10,7 +10,6 @@ import com.example.user.weather.logic.GeoLogic;
 import com.example.user.weather.logic.MyCityLogic;
 import com.example.user.weather.logic.TargetCityLogic;
 import com.example.user.weather.logic.WeatherLogic;
-import com.example.user.weather.model.CityEntity;
 import com.example.user.weather.model.GeoEntity;
 import com.example.user.weather.model.weather.InformationEntity;
 import com.example.user.weather.model.weather.MainEntity;
@@ -19,7 +18,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 import javax.inject.Inject;
-import java.util.List;
+
 
 public class MainFragment extends FragmentBase {
 
@@ -42,9 +41,9 @@ public class MainFragment extends FragmentBase {
 
     private FragmentMainBinding binding;
 
-    public static MainFragment newInstance(CityEntity city) {
+    public static MainFragment newInstance(GeoEntity geo) {
         Bundle args = new Bundle();
-        args.putSerializable("city", city);
+        args.putSerializable("geo", geo);
         MainFragment fragment = new MainFragment();
         fragment.setArguments(args);
         return fragment;
@@ -65,30 +64,6 @@ public class MainFragment extends FragmentBase {
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         appComponent().inject(this);
-
-        Observer observer = new Observer<List<GeoEntity>>() {
-
-            @Override
-            public void onCompleted() {
-                Log.d(TAG, "onCompleted()");
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                Log.d(TAG, "onError()");
-            }
-
-            @Override
-            public void onNext(List<GeoEntity> cities) {
-            }
-        };
-
-        geoLogic.getCities("東京都")
-                .compose(bindToLifecycle())
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(observer);
-
 
         Observer observer_2 = new Observer<InformationEntity<MainEntity>>() {
 

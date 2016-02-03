@@ -13,7 +13,6 @@ import dagger.Provides;
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
 import retrofit.RxJavaCallAdapterFactory;
-import retrofit.SimpleXmlConverterFactory;
 
 import javax.inject.Singleton;
 import java.util.Date;

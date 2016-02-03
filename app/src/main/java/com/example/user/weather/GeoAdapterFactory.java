@@ -14,9 +14,9 @@ import java.io.IOException;
 public class GeoAdapterFactory implements TypeAdapterFactory {
 
     private static final String RESPONSE = "response";
-    private static final String LOCATION = "location";
-    private static final String PREFECTURE = "prefecture";
     private static final String AREA = "area";
+    private static final String PREFECTURE = "prefecture";
+    private static final String LOCATION = "location";
 
     @Override
     public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {

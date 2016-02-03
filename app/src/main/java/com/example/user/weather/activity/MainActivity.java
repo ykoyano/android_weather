@@ -10,7 +10,7 @@ import android.util.Log;
 import com.example.user.weather.R;
 import com.example.user.weather.databinding.ActivityMainBinding;
 import com.example.user.weather.fragment.MainFragment;
-import com.example.user.weather.model.CityEntity;
+import com.example.user.weather.model.GeoEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +20,8 @@ public class MainActivity extends ActivityBase implements ViewPager.OnPageChange
     private static final String TAG = MainActivity.class.getSimpleName();
 
     private ActivityMainBinding binding;
-    
-    List<CityEntity> cities;
+
+    List<GeoEntity> geos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +42,7 @@ public class MainActivity extends ActivityBase implements ViewPager.OnPageChange
             return true;
         });
 
-        this.cities = getTestData();
+        geos = getTestData();
 
         binding.viewPager.setAdapter(makeFragmentPagerAdapter());
         binding.viewPager.addOnPageChangeListener(this);
@@ -51,8 +51,8 @@ public class MainActivity extends ActivityBase implements ViewPager.OnPageChange
 
     @Override
     protected void onNewIntent(Intent intent) {
-        if(intent.getSerializableExtra("city") != null){
-            this.cities.add((CityEntity) intent.getSerializableExtra("city"));
+        if(intent.getSerializableExtra("geo") != null){
+            this.geos.add((GeoEntity) intent.getSerializableExtra("geo"));
         }
     }
 
@@ -60,17 +60,17 @@ public class MainActivity extends ActivityBase implements ViewPager.OnPageChange
         return new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
-                return MainFragment.newInstance(cities.get(position));
+                return MainFragment.newInstance(geos.get(position));
             }
 
             @Override
             public CharSequence getPageTitle(int position) {
-                return cities.get(position).getTitle();
+                return geos.get(position).getCity();
             }
 
             @Override
             public int getCount() {
-                return  cities.size();
+                return  geos.size();
             }
         };
     }
@@ -90,11 +90,11 @@ public class MainActivity extends ActivityBase implements ViewPager.OnPageChange
 
     }
 
-    private List<CityEntity> getTestData() {
-        List<CityEntity> cities = new ArrayList<>();
-        cities.add(new CityEntity("さいたま", "110010"));
-        cities.add(new CityEntity("熊谷", "110020"));
-        cities.add(new CityEntity("秩父", "110030"));
+    private List<GeoEntity> getTestData() {
+        List<GeoEntity> cities = new ArrayList<>();
+        cities.add(new GeoEntity("さいたま", "110010", 1 ,1));
+        cities.add(new GeoEntity("さいたま", "110010", 1 ,1));
+        cities.add(new GeoEntity("さいたま", "110010", 1 ,1));
         return cities;
     }
 }

@@ -9,6 +9,8 @@ import java.util.List;
 
 public class GeoLogicImpl implements GeoLogic {
 
+    private static final String GET_AREAS = "getAreas";
+    private static final String GET_PREFECTURES = "getPrefectures";
     private static final String GET_CITIES = "getCities";
     private static final String SUGGEST = "suggest";
     private static final String SEARCH_BY_LOCATION = "searchByGeoLocation";
@@ -21,18 +23,18 @@ public class GeoLogicImpl implements GeoLogic {
     }
 
     @Override
-    public Observable<List<String>> getAreas(String method){
-        return api.getAreas(method);
+    public Observable<List<String>> getAreas() {
+        return api.getAreas(GET_AREAS);
     }
 
     @Override
-    public Observable<List<String>> getPrefectures(String method, String area){
-        return api.getPrefectures(method, area);
+    public Observable<List<String>> getPrefectures(String area) {
+        return api.getPrefectures(GET_PREFECTURES, area);
     }
 
     @Override
-    public Observable<List<GeoEntity>> getCities(String prefecture) {
-        return api.getCities(GET_CITIES, prefecture);
+    public Observable<List<GeoEntity>> getCities(String area, String prefecture) {
+        return api.getCities(GET_CITIES, area, prefecture);
     }
 
     @Override
