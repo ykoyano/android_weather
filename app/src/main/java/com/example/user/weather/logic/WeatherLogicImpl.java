@@ -18,7 +18,7 @@ public class WeatherLogicImpl implements WeatherLogic {
     }
 
     @Override
-    public Observable<InformationEntity> getWeather(double lat, double lon) {
-        return weatherApi.getWeather(lat, lon, APP_ID);
+    public Observable<InformationEntity> getWeather(double lon, double lat) {
+        return weatherApi.getWeather(lon, lat, APP_ID);
     }
 }

@@ -1,5 +1,6 @@
 package com.example.user.weather.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import android.support.v7.widget.SearchView;
@@ -90,6 +91,11 @@ public class SearchActivity extends ActivityBase {
                 }
                 return true;
             }
+        });
+
+        binding.selectArea.setOnClickListener(v -> {
+            Intent intent = new Intent(this, SelectActivity.class);
+            startActivity(intent);
         });
     }
 

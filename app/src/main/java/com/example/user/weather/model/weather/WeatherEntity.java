@@ -8,13 +8,27 @@ import lombok.EqualsAndHashCode;
 
 import java.util.List;
 
-@Data
-@EqualsAndHashCode(callSuper=false)
 public class WeatherEntity<T> extends EntityBase {
 
     @Expose
     private String dt;
-
+    
     @Expose
     private T main;
+
+    public String getDt() {
+        return dt;
+    }
+
+    public T getMain() {
+        return main;
+    }
+
+    public void setMain(T main) {
+        this.main = main;
+    }
+
+    public void setDt(String dt) {
+        this.dt = dt;
+    }
 }

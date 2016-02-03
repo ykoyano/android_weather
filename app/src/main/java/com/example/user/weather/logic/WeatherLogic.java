@@ -5,5 +5,5 @@ import rx.Observable;
 
 public interface WeatherLogic {
 
-    Observable<InformationEntity> getWeather(double lat, double lon);
+    Observable<InformationEntity> getWeather(double lon, double lat);
 }

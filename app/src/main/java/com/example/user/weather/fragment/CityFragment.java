@@ -30,6 +30,7 @@ public class CityFragment extends FragmentBase {
 
     private static final String KEY_AREA = "area";
     private static final String KEY_PREFECTURE = "prefecture";
+    private static final String KEY_GEO = "geo";
 
     @Inject
     GeoLogic geoLogic;
@@ -87,9 +88,28 @@ public class CityFragment extends FragmentBase {
         geoLogic.getCities(area, prefecture).compose(bindToLifecycle()).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).subscribe(observer);
 
         binding.listView.setOnItemClickListener((parent, listenerView, position, id) -> {
-            Intent intent = new Intent(getActivity(), MainActivity.class);
-            intent.putExtra("city", (String) parent.getItemAtPosition((int) id));
-            startActivity(intent);
+            Observer observer_2 = new Observer<List<GeoEntity>>() {
+
+                @Override
+                public void onCompleted() {
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                }
+
+                @Override
+                public void onNext(List<GeoEntity> geos) {
+                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                    intent.putExtra(KEY_GEO, geos.get(0));
+                    startActivity(intent);
+                }
+            };
+            geoLogic.getAddressByKeyword((String) parent.getItemAtPosition((int) id))
+                    .compose(bindToLifecycle())
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(observer_2);
         });
     }
 

@@ -1,5 +1,6 @@
 package com.example.user.weather.model;
 
+import android.databinding.Bindable;
 import com.google.gson.annotations.Expose;
 import lombok.AllArgsConstructor;
 
@@ -18,18 +19,22 @@ public class GeoEntity extends EntityBase {
     @Expose
     private double y;
 
+//    @Bindable
     public String getCity() {
         return city;
     }
 
+//    @Bindable
     public String getTown() {
         return town;
     }
 
+//    @Bindable
     public double getX() {
         return x;
     }
 
+//    @Bindable
     public double getY() {
         return y;
     }

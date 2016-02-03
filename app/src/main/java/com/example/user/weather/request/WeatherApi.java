@@ -12,8 +12,8 @@ public interface WeatherApi {
             "Content-type: application/json" })
 
     @GET("/data/2.5/forecast")
-    Observable<InformationEntity> getWeather(@Query("lat") final double lat, @Query("lon") final double lon, @Query("appid") final String appId);
+    Observable<InformationEntity> getWeather(@Query("lon") final double lon, @Query("lat") final double lat, @Query("appid") final String appId);
 
     @GET("/data/2.5/forecast/daily")
-    Observable<InformationEntity> getWeatherWeek(@Query("lat") final double lat, @Query("lon") final double lon, @Query("appid") final String appId);
+    Observable<InformationEntity> getWeatherWeek(@Query("lon") final double lon, @Query("lat") final double lat, @Query("appid") final String appId);
 }
