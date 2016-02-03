@@ -5,7 +5,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 import com.example.user.weather.R;
+import com.example.user.weather.activity.MainActivity;
 import com.example.user.weather.databinding.FragmentMainBinding;
 import com.example.user.weather.databinding.FragmentSearchBinding;
 import com.example.user.weather.logic.GeoLogic;
@@ -15,12 +17,17 @@ import com.example.user.weather.logic.WeatherLogic;
 import com.example.user.weather.model.GeoEntity;
 import com.example.user.weather.model.weather.InformationEntity;
 import com.example.user.weather.model.weather.MainEntity;
+import com.example.user.weather.view.CalendarView;
 import icepick.State;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 import javax.inject.Inject;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
 public class MainFragment extends FragmentBase {
@@ -107,6 +114,11 @@ public class MainFragment extends FragmentBase {
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
+
+
+        HashSet<Date> events = new HashSet<>();
+        events.add(new Date());
+        binding.calendarView.updateCalendar(events);
     }
 
 }
