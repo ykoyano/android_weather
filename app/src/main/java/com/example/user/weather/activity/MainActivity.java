@@ -49,7 +49,7 @@ public class MainActivity extends ActivityBase {
             return true;
         });
 
-        locations = getTestData();
+        locations = locationLogic.findAll();
 
         HashMap<CharSequence, Fragment> fragments = new HashMap<>();
         for (Location location : locations) {
@@ -74,11 +74,10 @@ public class MainActivity extends ActivityBase {
         }
     }
 
-    private List<Location> getTestData() {
-        List<Location> cities = new ArrayList<>();
-        cities.add(new Location(0, "さいたま", "110010", 139.569754, 35.8777));
-        cities.add(new Location(0, "栃木", "110010", 139.748078, 36.465153));
-        return cities;
-    }
-
+//    private List<Location> getTestData() {
+//        List<Location> cities = new ArrayList<>();
+//        cities.add(new Location(0, "さいたま", "110010", 139.569754, 35.8777));
+//        cities.add(new Location(0, "栃木", "110010", 139.748078, 36.465153));
+//        return cities;
+//    }
 }

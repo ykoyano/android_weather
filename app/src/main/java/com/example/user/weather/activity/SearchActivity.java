@@ -25,6 +25,8 @@ public class SearchActivity extends ActivityBase {
 
     private static final String TAG = SearchActivity.class.getSimpleName();
 
+    private static final String KEY_LOCATION = "location";
+
     private ActivitySearchBinding binding;
 
     private SearchView searchView;
@@ -60,7 +62,27 @@ public class SearchActivity extends ActivityBase {
                 } else {
                     binding.selectLayout.setVisibility(View.GONE);
                     binding.searchLayout.setVisibility(View.VISIBLE);
-                    getAddressByKeyword(searchWord);
+
+                    Observer observer = new Observer<List<Location>>() {
+
+                        @Override
+                        public void onCompleted() {
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                        }
+
+                        @Override
+                        public void onNext(List<Location> locations) {
+                            adapter.clear();
+                            adapter.addAll(LocationUtil.toStringArray(locations));
+                            adapter.notifyDataSetChanged();
+                            binding.resultListView.setAdapter(adapter);
+                        }
+                    };
+
+                    getAddressByKeyword(searchWord, observer);
                 }
                 return true;
             }
@@ -70,28 +92,30 @@ public class SearchActivity extends ActivityBase {
             Intent intent = new Intent(this, SelectActivity.class);
             startActivity(intent);
         });
+
+        binding.resultListView.setOnItemClickListener((parent, listenerView, position, id) -> {
+            Observer observer = new Observer<List<Location>>() {
+
+                @Override
+                public void onCompleted() {
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                }
+
+                @Override
+                public void onNext(List<Location> locations) {
+                    Intent intent = new Intent(SearchActivity.this, MainActivity.class);
+                    intent.putExtra(KEY_LOCATION, locations.get(0));
+                    startActivity(intent);
+                }
+            };
+            getAddressByKeyword((String) parent.getItemAtPosition((int) id), observer);
+        });
     }
 
-    private void getAddressByKeyword(String searchWord){
-        Observer observer = new Observer<List<Location>>() {
-
-            @Override
-            public void onCompleted() {
-            }
-
-            @Override
-            public void onError(Throwable e) {
-            }
-
-            @Override
-            public void onNext(List<Location> locations) {
-                adapter.clear();
-                adapter.addAll(LocationUtil.toStringArray(locations));
-                adapter.notifyDataSetChanged();
-                binding.resultListView.setAdapter(adapter);
-            }
-        };
-
+    private void getAddressByKeyword(String searchWord, Observer observer){
         locationLogic.getAddressByKeyword(searchWord)
                 .compose(bindToLifecycle())
                 .subscribeOn(Schedulers.newThread())
