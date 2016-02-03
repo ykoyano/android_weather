@@ -7,6 +7,12 @@ import java.util.List;
 
 public interface GeoLogic {
 
+    void save(GeoEntity geoEntity);
+
+    void delete(GeoEntity geoEntity);
+
+    List<GeoEntity> findAll();
+
     Observable<List<String>> getAreas();
 
     Observable<List<String>> getPrefectures(String area);

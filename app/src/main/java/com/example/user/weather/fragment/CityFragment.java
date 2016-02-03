@@ -85,7 +85,11 @@ public class CityFragment extends FragmentBase {
             }
         };
 
-        geoLogic.getCities(area, prefecture).compose(bindToLifecycle()).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).subscribe(observer);
+        geoLogic.getCities(area, prefecture)
+                .compose(bindToLifecycle())
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
 
         binding.listView.setOnItemClickListener((parent, listenerView, position, id) -> {
             Observer observer_2 = new Observer<List<GeoEntity>>() {
@@ -100,6 +104,7 @@ public class CityFragment extends FragmentBase {
 
                 @Override
                 public void onNext(List<GeoEntity> geos) {
+//                    geoLogic.save(geos.get(0));
                     Intent intent = new Intent(getActivity(), MainActivity.class);
                     intent.putExtra(KEY_GEO, geos.get(0));
                     startActivity(intent);

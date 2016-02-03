@@ -9,8 +9,10 @@ import com.example.user.weather.R;
 import com.example.user.weather.adapter.SubFragmentPagerAdapter;
 import com.example.user.weather.databinding.ActivityMainBinding;
 import com.example.user.weather.fragment.MainFragment;
+import com.example.user.weather.logic.GeoLogic;
 import com.example.user.weather.model.GeoEntity;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,13 +28,15 @@ public class MainActivity extends ActivityBase implements ViewPager.OnPageChange
     private SubFragmentPagerAdapter adapter;
 
     List<GeoEntity> geos;
-    List<String> geosString;
+
+    @Inject
+    GeoLogic geoLogic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
+        getApplicationComponent().inject(this);
 
         binding = bindContentView(this, R.layout.activity_main);
 
@@ -48,50 +52,25 @@ public class MainActivity extends ActivityBase implements ViewPager.OnPageChange
         });
 
         geos = getTestData();
+//        geos = geoLogic.findAll();
+//        geoLogic.delete(geoLogic.findAll().get(0));
 
         HashMap<CharSequence, Fragment> fragments = new HashMap<>();
         for (GeoEntity geoEntity : geos) {
             fragments.put(geoEntity.getCity(), MainFragment.newInstance(geoEntity));
         }
-//        SubFragmentPagerAdapter adapter = new SubFragmentPagerAdapter(getSupportFragmentManager(),fragments);
         this.adapter = new SubFragmentPagerAdapter(getSupportFragmentManager(),fragments);
         binding.viewPager.setAdapter(adapter);
         binding.viewPager.addOnPageChangeListener(this);
         binding.tabLayout.setupWithViewPager(binding.viewPager);
-
     }
-
-    //    @Override
-    //    protected void onNewIntent(Intent intent) {
-    //        if(intent.getStringExtra(KEY_GEO) != null){
-    //            this.geosString.add(intent.getStringExtra(KEY_GEO));
-    //        }
-    //    }
-
-    //    private FragmentPagerAdapter makeFragmentPagerAdapter() {
-    //        return new FragmentPagerAdapter(getSupportFragmentManager()) {
-    //            @Override
-    //            public Fragment getItem(int position) {
-    //                return MainFragment.newInstance(geosString.get(position));
-    //            }
-    //
-    //            @Override
-    //            public CharSequence getPageTitle(int position) {
-    //                return geosString.get(position);
-    //            }
-    //
-    //            @Override
-    //            public int getCount() {
-    //                return  geosString.size();
-    //            }
-    //        };
-    //    }
 
     @Override
     protected void onNewIntent(Intent intent) {
         if (intent.getSerializableExtra(KEY_GEO) != null) {
             if(binding.tabLayout.getTabCount() > this.geos.size()){
                 binding.tabLayout.removeTabAt(this.geos.size());
+                this.adapter.remove(this.geos.size());
             }
             GeoEntity geoEntity = (GeoEntity) intent.getSerializableExtra(KEY_GEO);
             this.adapter.add(geoEntity.getCity(), MainFragment.newInstance(geoEntity));
@@ -99,80 +78,6 @@ public class MainActivity extends ActivityBase implements ViewPager.OnPageChange
             binding.tabLayout.addTab(binding.tabLayout.newTab().setText(geoEntity.getCity()));
         }
     }
-
-//    private MyAdapter makeFragmentPagerAdapter() {
-//        return new MyAdapter(getSupportFragmentManager()) {
-//
-//            @Override
-//            public Fragment getItem(int position) {
-//                return MainFragment.newInstance(geos.get(position));
-//            }
-//
-//            @Override
-//            public CharSequence getPageTitle(int position) {
-//                return geos.get(position).getCity();
-//            }
-//
-//            @Override
-//            public int getCount() {
-//                return geos.size();
-//            }
-//
-//            @Override
-//            public void destroyItem(ViewGroup container, int position, Object object) {
-//                super.destroyItem(container, position, object);
-//
-//                if (position <= getCount()) {
-//                    FragmentManager manager = ((Fragment) object).getFragmentManager();
-//                    FragmentTransaction trans = manager.beginTransaction();
-//                    trans.remove((Fragment) object);
-//                    trans.commit();
-//                }
-//            }
-//        };
-//    }
-
-    //    private FragmentPagerAdapter makeFragmentPagerAdapter() {
-    //        return new FragmentPagerAdapter(getSupportFragmentManager()) {
-    //            @Override
-    //            public Fragment getItem(int position) {
-    //                return MainFragment.newInstance(geos.get(position).getCity());
-    //            }
-    //
-    //            @Override
-    //            public CharSequence getPageTitle(int position) {
-    //                return geos.get(position).getCity();
-    //            }
-    //
-    //            @Override
-    //            public int getCount() {
-    //                return  geos.size();
-    //            }
-    //
-    //            public void destroyAllItem(ViewPager pager) {
-    //                for (int i = 0; i < getCount() - 1; i++) {
-    //                    try {
-    //                        Object obj = this.instantiateItem(pager, i);
-    //                        if (obj != null)
-    //                            destroyItem(pager, i, obj);
-    //                    } catch (Exception e) {
-    //                    }
-    //                }
-    //            }
-    //
-    //            @Override
-    //            public void destroyItem(ViewGroup container, int position, Object object) {
-    //                super.destroyItem(container, position, object);
-    //
-    //                if (position <= getCount()) {
-    //                    FragmentManager manager = ((Fragment) object).getFragmentManager();
-    //                    FragmentTransaction trans = manager.beginTransaction();
-    //                    trans.remove((Fragment) object);
-    //                    trans.commit();
-    //                }
-    //            }
-    //        };
-    //    }
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -191,8 +96,10 @@ public class MainActivity extends ActivityBase implements ViewPager.OnPageChange
 
     private List<GeoEntity> getTestData() {
         List<GeoEntity> cities = new ArrayList<>();
-        cities.add(new GeoEntity("さいたま", "110010", 139.569754, 35.8777));
-        cities.add(new GeoEntity("栃木", "110010", 139.748078, 36.465153));
+        cities.add(new GeoEntity(0, "さいたま", "110010", 139.569754, 35.8777));
+        cities.add(new GeoEntity(0, "栃木", "110010", 139.748078, 36.465153));
+        cities.add(new GeoEntity(0, "群馬", "110010", 139.569754, 35.8777));
+        cities.add(new GeoEntity(0, "茨木", "110010", 139.748078, 36.465153));
         return cities;
     }
 }

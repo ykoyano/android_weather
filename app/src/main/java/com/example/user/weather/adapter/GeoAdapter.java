@@ -6,11 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.example.user.weather.R;
-import com.example.user.weather.databinding.CityBinding;
 import com.example.user.weather.databinding.GeoBinding;
-import com.example.user.weather.model.CityEntity;
 import com.example.user.weather.model.GeoEntity;
-import com.example.user.weather.request.GeoApi;
 
 public class GeoAdapter extends ArrayAdapterBase<GeoEntity> {
 

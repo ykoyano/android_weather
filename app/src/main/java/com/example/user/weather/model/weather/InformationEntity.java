@@ -1,11 +1,8 @@
 package com.example.user.weather.model.weather;
 
-import android.databinding.Bindable;
 import com.example.user.weather.model.EntityBase;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import java.util.List;
 

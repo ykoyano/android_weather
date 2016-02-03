@@ -1,5 +1,6 @@
 package com.example.user.weather.logic;
 
+import com.example.user.weather.Repository.GeoRepository;
 import com.example.user.weather.model.GeoEntity;
 import com.example.user.weather.request.GeoApi;
 import rx.Observable;
@@ -17,10 +18,27 @@ public class GeoLogicImpl implements GeoLogic {
     private static final String MATCHING_LIKE = "like";
 
     private GeoApi api;
+    private GeoRepository repository;
 
     @Inject
-    public GeoLogicImpl(GeoApi api) {
+    public GeoLogicImpl(GeoApi api, GeoRepository repository) {
         this.api = api;
+        this.repository = repository;
+    }
+
+    @Override
+    public void save(GeoEntity geoEntity) {
+        this.repository.save(geoEntity);
+    }
+
+    @Override
+    public void delete(GeoEntity geoEntity){
+        this.repository.delete(geoEntity);
+    }
+
+    @Override
+    public List<GeoEntity> findAll() {
+        return this.repository.findAll();
     }
 
     @Override

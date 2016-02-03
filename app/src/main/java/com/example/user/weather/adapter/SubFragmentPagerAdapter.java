@@ -18,5 +18,4 @@ public class SubFragmentPagerAdapter extends DynamicFragmentPagerAdapter {
         super.getFragmentInfoes().remove(position);
         super.needAllChange();
     }
-
 }

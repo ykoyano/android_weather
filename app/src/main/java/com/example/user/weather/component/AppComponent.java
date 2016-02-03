@@ -28,7 +28,6 @@ public interface AppComponent {
     void inject(AreaFragment areaFragment);
     void inject(PrefectureFragment prefectureFragment);
     void inject(CityFragment cityFragment);
-//    void inject(SearchHistoryFragment fragment);
 
     Context context();
 }
