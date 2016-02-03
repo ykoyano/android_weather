@@ -2,20 +2,21 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-        <variable
-                name="WeatherEntity"
-                type="com.example.user.weather.model.weather.WeatherEntity" />
-    </data>
+    <LinearLayout android:orientation="vertical"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  tools:context=".activity.SearchActivity">
 
-    <RelativeLayout android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    tools:context=".activity.SearchActivity">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/select_area"
+                android:text="@string/search_result"/>
 
         <ListView
                 android:id="@+id/list_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
-    </RelativeLayout>
+    </LinearLayout>
 </layout>

@@ -67,11 +67,7 @@ public class AreaFragment extends FragmentBase {
 
         binding.listView.setOnItemClickListener((parent, listenerView, position, id) -> {
             FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-            PrefectureFragment prefectureFragment = new PrefectureFragment();
-            Bundle args = new Bundle();
-            new Bundle().putString("area", (String) parent.getItemAtPosition((int) id));
-            prefectureFragment.setArguments(args);
-            transaction.replace(R.id.fragment_container, prefectureFragment, PrefectureFragment.TAG);
+            transaction.replace(R.id.fragment_container, PrefectureFragment.newInstance((String) parent.getItemAtPosition((int) id)), PrefectureFragment.TAG);
             transaction.addToBackStack(PrefectureFragment.TAG);
             transaction.commit();
         });

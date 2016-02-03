@@ -27,6 +27,9 @@ public class CityFragment extends FragmentBase {
 
     public static final String TAG = CityFragment.class.getSimpleName();
 
+    private static final String KEY_AREA = "area";
+    private static final String KEY_PREFECTURE = "prefecture";
+
     @Inject
     GeoLogic geoLogic;
 
@@ -36,11 +39,20 @@ public class CityFragment extends FragmentBase {
     @State
     String prefecture;
 
+    public static CityFragment newInstance(String area, String prefecture) {
+        CityFragment fragment = new CityFragment();
+        Bundle args = new Bundle();
+        args.putString(KEY_AREA, area);
+        args.putString(KEY_PREFECTURE, prefecture);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.area = (String) getArguments().get("area");
-        this.prefecture = (String) getArguments().get("prefecture");
+        this.area = (String) getArguments().get(KEY_AREA);
+        this.prefecture = (String) getArguments().get(KEY_PREFECTURE);
     }
 
     @Override

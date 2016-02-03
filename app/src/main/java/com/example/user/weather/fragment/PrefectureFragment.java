@@ -19,18 +19,28 @@ import java.util.List;
 
 public class PrefectureFragment extends FragmentBase{
 
+    public static final String TAG = PrefectureFragment.class.getSimpleName();
+
+    private static final String KEY_AREA = "area";
+
     @Inject
     GeoLogic geoLogic;
 
     @State
     String area;
 
-    public static final String TAG = PrefectureFragment.class.getSimpleName();
+    public static PrefectureFragment newInstance(String area) {
+        PrefectureFragment fragment = new PrefectureFragment();
+        Bundle args = new Bundle();
+        args.putString(KEY_AREA, area);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        area = getArguments().getString("area");
         super.onCreate(savedInstanceState);
+        this.area = getArguments().getString(KEY_AREA);
     }
 
     @Override
@@ -69,12 +79,7 @@ public class PrefectureFragment extends FragmentBase{
 
         binding.listView.setOnItemClickListener((parent, listenerView, position, id) -> {
             FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-            Bundle args = new Bundle();
-            args.putString("prefecture", (String) parent.getItemAtPosition((int) id));
-            args.putString("area", area);
-            CityFragment cityFragment = new CityFragment();
-            cityFragment.setArguments(args);
-            transaction.replace(R.id.fragment_container, cityFragment, CityFragment.TAG);
+            transaction.replace(R.id.fragment_container, CityFragment.newInstance(area, (String) parent.getItemAtPosition((int) id)), CityFragment.TAG);
             transaction.addToBackStack(PrefectureFragment.TAG);
             transaction.commit();
         });

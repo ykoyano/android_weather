@@ -6,14 +6,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.example.user.weather.R;
 
-
-public class SearchResultFragment extends FragmentBase{
+public class SearchResultFragment extends FragmentBase {
 
     public static final String TAG = SearchResultFragment.class.getSimpleName();
 
+    public static SearchResultFragment newInstance() {
+        return new SearchResultFragment();
+    }
+
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_search, container, false);
+        return inflater.inflate(R.layout.fragment_search_result, container, false);
     }
 
     @Override
