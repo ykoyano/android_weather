@@ -2,9 +2,10 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools">
 
-    <RelativeLayout android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    tools:context=".activity.SearchActivity">
+    <LinearLayout android:orientation="vertical"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  tools:context=".activity.SearchActivity">
 
         <android.support.v7.widget.Toolbar
                 android:id="@+id/tool_bar"
@@ -15,12 +16,58 @@
                 android:background="?attr/colorPrimary">
         </android.support.v7.widget.Toolbar>
 
-        <RelativeLayout
-                android:id="@+id/fragment_container"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below='@id/tool_bar'/>
+        <LinearLayout android:id="@+id/select_layout"
+                      android:orientation="vertical"
+                      android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      tools:context=".activity.SearchActivity">
 
-    </RelativeLayout>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/select_area"
+                    android:text="@string/select_area"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/current_location"
+                    android:text="@string/current_location"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/history"
+                    android:text="@string/history"/>
+
+            <ListView
+                    android:id="@+id/history_list_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/search_layout"
+                      android:orientation="vertical"
+                      android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      tools:context=".activity.SearchActivity"
+                      android:visibility="gone">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/search_result"
+                    android:text="@string/search_result"/>
+
+            <ListView
+                    android:id="@+id/result_list_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
 
 </layout>

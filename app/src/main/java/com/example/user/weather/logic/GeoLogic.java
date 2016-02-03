@@ -15,5 +15,5 @@ public interface GeoLogic {
 
     Observable<List<GeoEntity>> getAddressByCoordinate(double lon, double lat);
 
-    Observable<List<GeoEntity>> getAddressByKeyword(String matching, String keyword);
+    Observable<List<GeoEntity>> getAddressByKeyword(String keyword);
 }

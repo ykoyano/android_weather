@@ -14,6 +14,7 @@ public class GeoLogicImpl implements GeoLogic {
     private static final String GET_CITIES = "getCities";
     private static final String SUGGEST = "suggest";
     private static final String SEARCH_BY_LOCATION = "searchByGeoLocation";
+    private static final String MATCHING_LIKE = "like";
 
     private GeoApi api;
 
@@ -43,7 +44,7 @@ public class GeoLogicImpl implements GeoLogic {
     }
 
     @Override
-    public Observable<List<GeoEntity>> getAddressByKeyword(String matching, String keyword) {
-        return api.getAddressByKeyword(SUGGEST, matching, keyword);
+    public Observable<List<GeoEntity>> getAddressByKeyword(String keyword) {
+        return api.getAddressByKeyword(SUGGEST, MATCHING_LIKE, keyword);
     }
 }
