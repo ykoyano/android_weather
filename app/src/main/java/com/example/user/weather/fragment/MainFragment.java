@@ -91,12 +91,10 @@ public class MainFragment extends FragmentBase {
 
             @Override
             public void onCompleted() {
-
             }
 
             @Override
             public void onError(Throwable e) {
-
             }
 
             @Override
