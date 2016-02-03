@@ -5,7 +5,7 @@
 
     <data>
         <variable name="geo"
-                  type="com.example.user.weather.model.GeoEntity"/>
+                  type="com.example.user.weather.model.Location"/>
         <variable name="information"
                   type="com.example.user.weather.model.weather.InformationEntity"/>
     </data>

@@ -28,23 +28,6 @@
                     android:id="@+id/select_area"
                     android:text="@string/select_area"/>
 
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/current_location"
-                    android:text="@string/current_location"/>
-
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/history"
-                    android:text="@string/history"/>
-
-            <ListView
-                    android:id="@+id/history_list_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
         </LinearLayout>
 
         <LinearLayout android:id="@+id/search_layout"

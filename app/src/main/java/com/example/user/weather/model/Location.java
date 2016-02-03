@@ -1,10 +1,11 @@
 package com.example.user.weather.model;
 
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public class GeoEntity extends EntityBase {
+public class Location extends EntityBase {
 
     private int id;
 
@@ -15,10 +16,12 @@ public class GeoEntity extends EntityBase {
     private String town;
 
     @Expose
-    private double x;
+    @SerializedName("x")
+    private double lon;
 
     @Expose
-    private double y;
+    @SerializedName("y")
+    private double lat;
 
     public int getId() {
         return id;
@@ -36,20 +39,20 @@ public class GeoEntity extends EntityBase {
         return town;
     }
 
-    public double getX() {
-        return x;
+    public double getLon() {
+        return lon;
     }
 
-    public double getY() {
-        return y;
+    public double getLat() {
+        return lat;
     }
 
-    public void setY(double y) {
-        this.y = y;
+    public void setLat(double lat) {
+        this.lat = lat;
     }
 
-    public void setX(double x) {
-        this.x = x;
+    public void setLon(double lon) {
+        this.lon = lon;
     }
 
     public void setTown(String town) {

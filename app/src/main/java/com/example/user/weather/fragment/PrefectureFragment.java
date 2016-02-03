@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import com.example.user.weather.R;
 import com.example.user.weather.databinding.FragmentPrefectureBinding;
-import com.example.user.weather.logic.GeoLogic;
+import com.example.user.weather.logic.LocationLogic;
 import icepick.State;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -24,10 +24,12 @@ public class PrefectureFragment extends FragmentBase{
     private static final String KEY_AREA = "area";
 
     @Inject
-    GeoLogic geoLogic;
+    LocationLogic locationLogic;
 
     @State
     String area;
+
+    private FragmentPrefectureBinding binding;
 
     public static PrefectureFragment newInstance(String area) {
         PrefectureFragment fragment = new PrefectureFragment();
@@ -51,9 +53,20 @@ public class PrefectureFragment extends FragmentBase{
     @Override
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        final FragmentPrefectureBinding binding = FragmentPrefectureBinding.bind(view);
+        binding = FragmentPrefectureBinding.bind(view);
         appComponent().inject(this);
 
+        getPrefectures();
+
+        binding.listView.setOnItemClickListener((parent, listenerView, position, id) -> {
+            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragment_container, CityFragment.newInstance(area, (String) parent.getItemAtPosition((int) id)), CityFragment.TAG);
+            transaction.addToBackStack(PrefectureFragment.TAG);
+            transaction.commit();
+        });
+    }
+
+    private void getPrefectures(){
         Observer observer = new Observer<List<String>>() {
 
             @Override
@@ -71,17 +84,10 @@ public class PrefectureFragment extends FragmentBase{
             }
         };
 
-        geoLogic.getPrefectures(area)
+        locationLogic.getPrefectures(area)
                 .compose(bindToLifecycle())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
-
-        binding.listView.setOnItemClickListener((parent, listenerView, position, id) -> {
-            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.fragment_container, CityFragment.newInstance(area, (String) parent.getItemAtPosition((int) id)), CityFragment.TAG);
-            transaction.addToBackStack(PrefectureFragment.TAG);
-            transaction.commit();
-        });
     }
 }

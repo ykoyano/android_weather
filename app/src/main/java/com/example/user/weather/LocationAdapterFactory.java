@@ -11,7 +11,7 @@ import com.google.gson.stream.JsonWriter;
 
 import java.io.IOException;
 
-public class GeoAdapterFactory implements TypeAdapterFactory {
+public class LocationAdapterFactory implements TypeAdapterFactory {
 
     private static final String RESPONSE = "response";
     private static final String AREA = "area";

@@ -1,8 +1,8 @@
 package com.example.user.weather.module;
 
 import android.content.Context;
-import com.example.user.weather.Repository.GeoRepository;
-import com.example.user.weather.Repository.GeoRepositoryImpl;
+import com.example.user.weather.Repository.LocationRepository;
+import com.example.user.weather.Repository.LocationRepositoryImpl;
 import dagger.Module;
 import dagger.Provides;
 
@@ -13,7 +13,7 @@ public class DateLayerModule {
 
     @Singleton
     @Provides
-    public GeoRepository provideGeoRepository(Context context) {
-        return new GeoRepositoryImpl(context);
+    public LocationRepository provideGeoRepository(Context context) {
+        return new LocationRepositoryImpl(context);
     }
 }

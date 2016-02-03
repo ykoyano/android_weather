@@ -1,12 +1,11 @@
 package com.example.user.weather.module;
 
-import com.example.user.weather.Repository.GeoRepository;
-import com.example.user.weather.Repository.GeoRepositoryImpl;
-import com.example.user.weather.logic.GeoLogic;
-import com.example.user.weather.logic.GeoLogicImpl;
+import com.example.user.weather.Repository.LocationRepository;
+import com.example.user.weather.logic.LocationLogic;
+import com.example.user.weather.logic.LocationLogicImpl;
 import com.example.user.weather.logic.WeatherLogic;
 import com.example.user.weather.logic.WeatherLogicImpl;
-import com.example.user.weather.request.GeoApi;
+import com.example.user.weather.request.LocationApi;
 import com.example.user.weather.request.WeatherApi;
 
 import dagger.Module;
@@ -25,7 +24,7 @@ public class LogicLayerModule {
 
     @Singleton
     @Provides
-    public GeoLogic provideGeoLogic(GeoApi geoApi, GeoRepository repository) {
-        return new GeoLogicImpl(geoApi, repository);
+    public LocationLogic provideGeoLogic(LocationApi locationApi, LocationRepository repository) {
+        return new LocationLogicImpl(locationApi, repository);
     }
 }

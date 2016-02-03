@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import com.example.user.weather.R;
 import com.example.user.weather.databinding.FragmentAreaBinding;
-import com.example.user.weather.logic.GeoLogic;
+import com.example.user.weather.logic.LocationLogic;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -24,7 +24,7 @@ public class AreaFragment extends FragmentBase {
     }
 
     @Inject
-    GeoLogic geoLogic;
+    LocationLogic locationLogic;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,7 +59,7 @@ public class AreaFragment extends FragmentBase {
             }
         };
 
-        geoLogic.getAreas()
+        locationLogic.getAreas()
                 .compose(bindToLifecycle())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())

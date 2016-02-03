@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <data class="GeoBinding">
-        <variable name="geo"
-                  type="com.example.user.weather.model.GeoEntity"/>
+    <data class="LocationBinding">
+        <variable name="location"
+                  type="com.example.user.weather.model.Location"/>
     </data>
 
     <LinearLayout
@@ -14,7 +14,7 @@
         <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="@{geo.city}"
+                android:text="@{location.city}"
                 android:textColor="@color/colorPrimaryDark"
                 />
 

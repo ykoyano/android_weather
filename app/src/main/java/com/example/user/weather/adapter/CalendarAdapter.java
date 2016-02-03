@@ -55,11 +55,8 @@ public class CalendarAdapter extends ArrayAdapterBase<Date> {
         binding.textView.setTypeface(null, Typeface.NORMAL);
         binding.textView.setTextColor(Color.BLACK);
 
-        if (month != today.getMonth() || year != today.getYear()) {
-//            binding.textView.setTextColor(getResources().getColor(R.color.greyed_out));
-        } else if (day == today.getDate()) {
+        if (day == today.getDate()) {
             binding.textView.setTypeface(null, Typeface.BOLD);
-//            binding.textView.setTextColor(getResources().getColor(R.color.today));
         }
 
         binding.textView.setText(String.valueOf(date.getDate()));

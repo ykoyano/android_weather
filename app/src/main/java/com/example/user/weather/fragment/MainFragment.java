@@ -8,9 +8,9 @@ import android.view.ViewGroup;
 import com.example.user.weather.R;
 import com.example.user.weather.adapter.WeatherRecycleAdapter;
 import com.example.user.weather.databinding.FragmentMainBinding;
-import com.example.user.weather.logic.GeoLogic;
+import com.example.user.weather.logic.LocationLogic;
 import com.example.user.weather.logic.WeatherLogic;
-import com.example.user.weather.model.GeoEntity;
+import com.example.user.weather.model.Location;
 import com.example.user.weather.model.weather.InformationEntity;
 import com.example.user.weather.model.weather.MainEntity;
 import icepick.State;
@@ -28,25 +28,27 @@ public class MainFragment extends FragmentBase {
 
     public static final String TAG = MainFragment.class.getSimpleName();
 
-    private static final String KEY_GEO = "geo";
+    private static final String KEY_LOCATION = "location";
 
     public MainFragment() {
     }
 
     @State
-    GeoEntity geo;
+    Location geo;
 
     @Inject
     WeatherLogic weatherLogic;
 
     @Inject
-    GeoLogic geoLogic;
+    LocationLogic locationLogic;
 
     private WeatherRecycleAdapter<MainEntity> adapter;
 
-    public static MainFragment newInstance(GeoEntity geo) {
+    private FragmentMainBinding binding;
+
+    public static MainFragment newInstance(Location geo) {
         Bundle args = new Bundle();
-        args.putSerializable(KEY_GEO, geo);
+        args.putSerializable(KEY_LOCATION, geo);
         MainFragment fragment = new MainFragment();
         fragment.setArguments(args);
         return fragment;
@@ -55,7 +57,7 @@ public class MainFragment extends FragmentBase {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.geo = (GeoEntity) getArguments().getSerializable(KEY_GEO);
+        this.geo = (Location) getArguments().getSerializable(KEY_LOCATION);
     }
 
     @Override
@@ -66,7 +68,7 @@ public class MainFragment extends FragmentBase {
     @Override
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        final FragmentMainBinding binding = FragmentMainBinding.bind(view);
+        binding = FragmentMainBinding.bind(view);
         appComponent().inject(this);
 
         this.adapter = new WeatherRecycleAdapter<>(new ArrayList<>());
@@ -89,35 +91,14 @@ public class MainFragment extends FragmentBase {
 
             @Override
             public void onNext(InformationEntity<MainEntity> information) {
+                getAddressByCoordinate(information);
                 binding.setInformation(information);
                 adapter.addAllItem(information.getList());
                 adapter.notifyDataSetChanged();
-
-                Observer observer_2 = new Observer<List<GeoEntity>>() {
-
-                    @Override
-                    public void onCompleted() {
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                    }
-
-                    @Override
-                    public void onNext(List<GeoEntity> geos) {
-                        binding.setGeo(geos.get(0));
-                    }
-                };
-
-                geoLogic.getAddressByCoordinate(information.getCity().getCoord().getLon(), information.getCity().getCoord().getLat())
-                        .compose(bindToLifecycle())
-                        .subscribeOn(Schedulers.newThread())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(observer_2);
             }
         };
 
-        weatherLogic.getWeather(geo.getX(), geo.getY())
+        weatherLogic.getWeather(geo.getLon(), geo.getLat())
                 .compose(bindToLifecycle())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -126,6 +107,31 @@ public class MainFragment extends FragmentBase {
         HashSet<Date> events = new HashSet<>();
         events.add(new Date());
         binding.calendarView.updateCalendar(events);
+    }
+
+    private void getAddressByCoordinate(InformationEntity<MainEntity> information){
+
+        Observer observer = new Observer<List<Location>>() {
+
+            @Override
+            public void onCompleted() {
+            }
+
+            @Override
+            public void onError(Throwable e) {
+            }
+
+            @Override
+            public void onNext(List<Location> locations) {
+                binding.setGeo(locations.get(0));
+            }
+        };
+
+        locationLogic.getAddressByCoordinate(information.getCity().getCoord().getLon(), information.getCity().getCoord().getLat())
+                .compose(bindToLifecycle())
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
     }
 
 }

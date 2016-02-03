@@ -9,19 +9,16 @@ import android.widget.ArrayAdapter;
 import com.example.user.weather.R;
 import com.example.user.weather.activity.MainActivity;
 import com.example.user.weather.databinding.FragmentCityBinding;
-import com.example.user.weather.logic.GeoLogic;
-import com.example.user.weather.model.GeoEntity;
+import com.example.user.weather.logic.LocationLogic;
+import com.example.user.weather.model.Location;
+import com.example.user.weather.util.LocationUtil;
 import icepick.State;
-import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 import javax.inject.Inject;
 
-import java.util.ArrayList;
-
-import java.util.LinkedHashSet;
 import java.util.List;
 
 public class CityFragment extends FragmentBase {
@@ -30,16 +27,18 @@ public class CityFragment extends FragmentBase {
 
     private static final String KEY_AREA = "area";
     private static final String KEY_PREFECTURE = "prefecture";
-    private static final String KEY_GEO = "geo";
+    private static final String KEY_LOCATION = "location";
 
     @Inject
-    GeoLogic geoLogic;
+    LocationLogic locationLogic;
 
     @State
     String area;
 
     @State
     String prefecture;
+
+    FragmentCityBinding binding;
 
     public static CityFragment newInstance(String area, String prefecture) {
         CityFragment fragment = new CityFragment();
@@ -65,10 +64,10 @@ public class CityFragment extends FragmentBase {
     @Override
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        final FragmentCityBinding binding = FragmentCityBinding.bind(view);
+        binding = FragmentCityBinding.bind(view);
         appComponent().inject(this);
 
-        Observer observer = new Observer<List<GeoEntity>>() {
+        Observer observer = new Observer<List<Location>>() {
 
             @Override
             public void onCompleted() {
@@ -79,48 +78,47 @@ public class CityFragment extends FragmentBase {
             }
 
             @Override
-            public void onNext(List<GeoEntity> geos) {
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext().getApplicationContext(), android.R.layout.simple_list_item_1, distinct(geos));
+            public void onNext(List<Location> locations) {
+                locationLogic.save(locations.get(0));
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                intent.putExtra(KEY_LOCATION, locations.get(0));
+                startActivity(intent);
+            }
+        };
+
+        getCities();
+
+        binding.listView.setOnItemClickListener((parent, listenerView, position, id) -> {
+            locationLogic.getAddressByKeyword((String) parent.getItemAtPosition((int) id))
+                    .compose(bindToLifecycle())
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(observer);
+        });
+    }
+
+    private void getCities(){
+        Observer observer = new Observer<List<Location>>() {
+
+            @Override
+            public void onCompleted() {
+            }
+
+            @Override
+            public void onError(Throwable e) {
+            }
+
+            @Override
+            public void onNext(List<Location> locations) {
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext().getApplicationContext(), android.R.layout.simple_list_item_1, LocationUtil.toStringArray(locations));
                 binding.listView.setAdapter(adapter);
             }
         };
 
-        geoLogic.getCities(area, prefecture)
+        locationLogic.getCities(area, prefecture)
                 .compose(bindToLifecycle())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
-
-        binding.listView.setOnItemClickListener((parent, listenerView, position, id) -> {
-            Observer observer_2 = new Observer<List<GeoEntity>>() {
-
-                @Override
-                public void onCompleted() {
-                }
-
-                @Override
-                public void onError(Throwable e) {
-                }
-
-                @Override
-                public void onNext(List<GeoEntity> geos) {
-//                    geoLogic.save(geos.get(0));
-                    Intent intent = new Intent(getActivity(), MainActivity.class);
-                    intent.putExtra(KEY_GEO, geos.get(0));
-                    startActivity(intent);
-                }
-            };
-            geoLogic.getAddressByKeyword((String) parent.getItemAtPosition((int) id))
-                    .compose(bindToLifecycle())
-                    .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(observer_2);
-        });
-    }
-
-    private ArrayList<String> distinct(List<GeoEntity> slist) {
-        List<String> cities = Observable.from(slist).map(GeoEntity::getCity).toList().toBlocking().single();
-        LinkedHashSet<String> set = new LinkedHashSet<>(cities);
-        return new ArrayList<>(set);
     }
 }

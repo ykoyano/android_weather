@@ -1,14 +1,14 @@
 package com.example.user.weather.logic;
 
-import com.example.user.weather.Repository.GeoRepository;
-import com.example.user.weather.model.GeoEntity;
-import com.example.user.weather.request.GeoApi;
+import com.example.user.weather.Repository.LocationRepository;
+import com.example.user.weather.model.Location;
+import com.example.user.weather.request.LocationApi;
 import rx.Observable;
 
 import javax.inject.Inject;
 import java.util.List;
 
-public class GeoLogicImpl implements GeoLogic {
+public class LocationLogicImpl implements LocationLogic {
 
     private static final String GET_AREAS = "getAreas";
     private static final String GET_PREFECTURES = "getPrefectures";
@@ -17,27 +17,27 @@ public class GeoLogicImpl implements GeoLogic {
     private static final String SEARCH_BY_LOCATION = "searchByGeoLocation";
     private static final String MATCHING_LIKE = "like";
 
-    private GeoApi api;
-    private GeoRepository repository;
+    private LocationApi api;
+    private LocationRepository repository;
 
     @Inject
-    public GeoLogicImpl(GeoApi api, GeoRepository repository) {
+    public LocationLogicImpl(LocationApi api, LocationRepository repository) {
         this.api = api;
         this.repository = repository;
     }
 
     @Override
-    public void save(GeoEntity geoEntity) {
-        this.repository.save(geoEntity);
+    public void save(Location location) {
+        this.repository.save(location);
     }
 
     @Override
-    public void delete(GeoEntity geoEntity){
-        this.repository.delete(geoEntity);
+    public void delete(Location location){
+        this.repository.delete(location);
     }
 
     @Override
-    public List<GeoEntity> findAll() {
+    public List<Location> findAll() {
         return this.repository.findAll();
     }
 
@@ -52,17 +52,17 @@ public class GeoLogicImpl implements GeoLogic {
     }
 
     @Override
-    public Observable<List<GeoEntity>> getCities(String area, String prefecture) {
+    public Observable<List<Location>> getCities(String area, String prefecture) {
         return api.getCities(GET_CITIES, area, prefecture);
     }
 
     @Override
-    public Observable<List<GeoEntity>> getAddressByCoordinate(double lon, double lat) {
+    public Observable<List<Location>> getAddressByCoordinate(double lon, double lat) {
         return api.getAddressByCoordinate(SEARCH_BY_LOCATION, lon, lat);
     }
 
     @Override
-    public Observable<List<GeoEntity>> getAddressByKeyword(String keyword) {
+    public Observable<List<Location>> getAddressByKeyword(String keyword) {
         return api.getAddressByKeyword(SUGGEST, MATCHING_LIKE, keyword);
     }
 }

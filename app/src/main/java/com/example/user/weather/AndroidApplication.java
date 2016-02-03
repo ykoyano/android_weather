@@ -1,8 +1,6 @@
 package com.example.user.weather;
 
 import android.support.multidex.MultiDexApplication;
-import com.activeandroid.ActiveAndroid;
-import com.activeandroid.Configuration;
 import com.example.user.weather.component.AppComponent;
 import com.example.user.weather.component.DaggerAppComponent;
 import com.example.user.weather.module.AppModule;
@@ -14,8 +12,6 @@ public class AndroidApplication extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-//        Configuration.Builder configurationBuilder = new Configuration.Builder(getBaseContext());
-//        ActiveAndroid.initialize(configurationBuilder.create());
     }
 
     public AppComponent getAppComponent() {
@@ -25,11 +21,5 @@ public class AndroidApplication extends MultiDexApplication {
                     .build();
         }
         return component;
-    }
-
-    @Override
-    public void onTerminate() {
-        super.onTerminate();
-//        ActiveAndroid.dispose();
     }
 }

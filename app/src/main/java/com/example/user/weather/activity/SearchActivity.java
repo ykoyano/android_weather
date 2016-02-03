@@ -4,22 +4,21 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import com.example.user.weather.R;
 import com.example.user.weather.databinding.ActivitySearchBinding;
-import com.example.user.weather.logic.GeoLogic;
-import com.example.user.weather.model.GeoEntity;
+import com.example.user.weather.logic.LocationLogic;
+import com.example.user.weather.model.Location;
+import com.example.user.weather.util.LocationUtil;
 import org.apache.commons.lang3.StringUtils;
-import rx.Observable;
+
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
 
 public class SearchActivity extends ActivityBase {
@@ -31,7 +30,7 @@ public class SearchActivity extends ActivityBase {
     private SearchView searchView;
 
     @Inject
-    GeoLogic geoLogic;
+    LocationLogic locationLogic;
 
     ArrayAdapter<String> adapter;
 
@@ -49,45 +48,19 @@ public class SearchActivity extends ActivityBase {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
             @Override
-            public boolean onQueryTextSubmit(String s) {
+            public boolean onQueryTextSubmit(String searchWord) {
                 return false;
             }
 
             @Override
-            public boolean onQueryTextChange(String s) {
-                if (StringUtils.isBlank(s)) {
+            public boolean onQueryTextChange(String searchWord) {
+                if (StringUtils.isBlank(searchWord)) {
                     binding.selectLayout.setVisibility(View.VISIBLE);
                     binding.searchLayout.setVisibility(View.GONE);
                 } else {
                     binding.selectLayout.setVisibility(View.GONE);
                     binding.searchLayout.setVisibility(View.VISIBLE);
-
-                    Observer observer = new Observer<List<GeoEntity>>() {
-
-                        @Override
-                        public void onCompleted() {
-                            Log.d(TAG, "onCompleted()");
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-                            Log.d(TAG, "onError()");
-                        }
-
-                        @Override
-                        public void onNext(List<GeoEntity> geos) {
-                            adapter.clear();
-                            adapter.addAll(distinct(geos));
-                            adapter.notifyDataSetChanged();
-                            binding.resultListView.setAdapter(adapter);
-                        }
-                    };
-
-                    geoLogic.getAddressByKeyword(s)
-                            .compose(bindToLifecycle())
-                            .subscribeOn(Schedulers.newThread())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(observer);
+                    getAddressByKeyword(searchWord);
                 }
                 return true;
             }
@@ -99,9 +72,30 @@ public class SearchActivity extends ActivityBase {
         });
     }
 
-    private ArrayList<String> distinct(List<GeoEntity> slist) {
-        List<String> cities = Observable.from(slist).map(GeoEntity::getCity).toList().toBlocking().single();
-        LinkedHashSet<String> set = new LinkedHashSet<>(cities);
-        return new ArrayList<>(set);
+    private void getAddressByKeyword(String searchWord){
+        Observer observer = new Observer<List<Location>>() {
+
+            @Override
+            public void onCompleted() {
+            }
+
+            @Override
+            public void onError(Throwable e) {
+            }
+
+            @Override
+            public void onNext(List<Location> locations) {
+                adapter.clear();
+                adapter.addAll(LocationUtil.toStringArray(locations));
+                adapter.notifyDataSetChanged();
+                binding.resultListView.setAdapter(adapter);
+            }
+        };
+
+        locationLogic.getAddressByKeyword(searchWord)
+                .compose(bindToLifecycle())
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
     }
 }

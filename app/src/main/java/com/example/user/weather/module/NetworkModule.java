@@ -1,7 +1,7 @@
 package com.example.user.weather.module;
 
-import com.example.user.weather.GeoAdapterFactory;
-import com.example.user.weather.request.GeoApi;
+import com.example.user.weather.LocationAdapterFactory;
+import com.example.user.weather.request.LocationApi;
 import com.example.user.weather.request.WeatherApi;
 
 import com.google.gson.FieldNamingPolicy;
@@ -20,14 +20,14 @@ import java.util.Date;
 @Module
 public class NetworkModule {
 
-    private static final String OPEN_WEATHER_MAP_END_POINT = "http://api.openweathermap.org";
+    private static final String OPEN_WEATHER_MAP_API = "http://api.openweathermap.org";
 
-    private static final String GEO_END_POINT = "http://geoapi.heartrails.com";
+    private static final String LOCATION_API = "http://geoapi.heartrails.com";
 
     @Singleton
     @Provides
     public WeatherApi provideWeatherApi() {
-        return restAdapter(OPEN_WEATHER_MAP_END_POINT)
+        return restAdapter(OPEN_WEATHER_MAP_API)
                 .addConverterFactory(GsonConverterFactory.create(gson()))
                 .build()
                 .create(WeatherApi.class);
@@ -35,8 +35,8 @@ public class NetworkModule {
 
     @Singleton
     @Provides
-    public GeoApi provideGeoApi() {
-        return restAdapter(GEO_END_POINT).addConverterFactory(GsonConverterFactory.create(geoGson())).build().create(GeoApi.class);
+    public LocationApi provideLocationApi() {
+        return restAdapter(LOCATION_API).addConverterFactory(GsonConverterFactory.create(locationGson())).build().create(LocationApi.class);
     }
 
     private Retrofit.Builder restAdapter(final String endpoint) {
@@ -47,9 +47,9 @@ public class NetworkModule {
         return new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).registerTypeAdapter(Date.class, new DateTypeAdapter()).create();
     }
 
-    private Gson geoGson() {
+    private Gson locationGson() {
         return new GsonBuilder()
                 .excludeFieldsWithoutExposeAnnotation()
-                .registerTypeAdapterFactory(new GeoAdapterFactory()).create();
+                .registerTypeAdapterFactory(new LocationAdapterFactory()).create();
     }
 }
