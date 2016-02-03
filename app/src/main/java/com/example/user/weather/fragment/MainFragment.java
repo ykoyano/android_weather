@@ -33,7 +33,8 @@ public class MainFragment extends FragmentBase {
     public MainFragment() {
     }
 
-    @State GeoEntity geo;
+    @State
+    GeoEntity geo;
 
     @Inject
     WeatherLogic weatherLogic;
@@ -121,7 +122,6 @@ public class MainFragment extends FragmentBase {
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
-
 
         HashSet<Date> events = new HashSet<>();
         events.add(new Date());

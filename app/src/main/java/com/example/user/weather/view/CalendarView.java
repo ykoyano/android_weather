@@ -2,17 +2,13 @@ package com.example.user.weather.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.example.user.weather.R;
+import com.example.user.weather.adapter.CalendarAdapter;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -107,66 +103,14 @@ public class CalendarView extends LinearLayout {
             calendar.add(Calendar.DAY_OF_MONTH, 1);
         }
 
-        grid.setAdapter(new CalendarAdapter(getContext(), cells, events));
+        CalendarAdapter adapter = new CalendarAdapter(getContext(), events);
+        adapter.addAll(cells);
+        grid.setAdapter(adapter);
 
         SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
         txtDate.setText(sdf.format(currentDate.getTime()));
 
         int month = currentDate.get(Calendar.MONTH);
-    }
-
-    private class CalendarAdapter extends ArrayAdapter<Date> {
-
-        private HashSet<Date> eventDays;
-
-        private LayoutInflater inflater;
-
-        public CalendarAdapter(Context context, ArrayList<Date> days, HashSet<Date> eventDays) {
-            super(context, R.layout.control_calendar_day, days);
-            this.eventDays = eventDays;
-            inflater = LayoutInflater.from(context);
-        }
-
-        @Override
-        public View getView(int position, View view, ViewGroup parent) {
-
-            Date date = getItem(position);
-            int day = date.getDate();
-            int month = date.getMonth();
-            int year = date.getYear();
-
-            Date today = new Date();
-
-            if (view == null)
-                view = inflater.inflate(R.layout.control_calendar_day, parent, false);
-
-            TextView textView = (TextView) view.findViewById(R.id.calendar_day_text);
-
-            textView.setBackgroundResource(0);
-            if (eventDays != null) {
-                for (Date eventDate : eventDays) {
-                    if (eventDate.getDate() == day &&
-                            eventDate.getMonth() == month &&
-                            eventDate.getYear() == year) {
-                        break;
-                    }
-                }
-            }
-
-            textView.setTypeface(null, Typeface.NORMAL);
-            textView.setTextColor(Color.BLACK);
-
-            if (month != today.getMonth() || year != today.getYear()) {
-                textView.setTextColor(getResources().getColor(R.color.greyed_out));
-            } else if (day == today.getDate()) {
-                textView.setTypeface(null, Typeface.BOLD);
-                textView.setTextColor(getResources().getColor(R.color.today));
-            }
-
-            textView.setText(String.valueOf(date.getDate()));
-
-            return view;
-        }
     }
 
     public void setEventHandler(EventHandler eventHandler) {
