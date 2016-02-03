@@ -5,8 +5,6 @@ import com.google.gson.annotations.Expose;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-@Data
-@EqualsAndHashCode(callSuper=false)
 public class MainEntity extends EntityBase {
 
     @Expose
@@ -14,4 +12,20 @@ public class MainEntity extends EntityBase {
 
     @Expose
     private double tempMin;
+
+    public double getTempMax() {
+        return tempMax;
+    }
+
+    public double getTempMin() {
+        return tempMin;
+    }
+
+    public void setTempMin(double tempMin) {
+        this.tempMin = tempMin;
+    }
+
+    public void setTempMax(double tempMax) {
+        this.tempMax = tempMax;
+    }
 }

@@ -178,7 +178,7 @@ public class MainActivity extends ActivityBase implements ViewPager.OnPageChange
     }
 
     @Override
-    public void onPageSelected(int position) {
+    public void onPageSelected(int position)     {
         Log.d("MainActivity", "onPageSelected() position=" + position);
     }
 

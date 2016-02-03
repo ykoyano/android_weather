@@ -1,31 +1,25 @@
 package com.example.user.weather.fragment;
 
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 import com.example.user.weather.R;
-import com.example.user.weather.activity.MainActivity;
+import com.example.user.weather.adapter.WeatherRecycleAdapter;
 import com.example.user.weather.databinding.FragmentMainBinding;
-import com.example.user.weather.databinding.FragmentSearchBinding;
 import com.example.user.weather.logic.GeoLogic;
-import com.example.user.weather.logic.MyCityLogic;
-import com.example.user.weather.logic.TargetCityLogic;
 import com.example.user.weather.logic.WeatherLogic;
 import com.example.user.weather.model.GeoEntity;
 import com.example.user.weather.model.weather.InformationEntity;
 import com.example.user.weather.model.weather.MainEntity;
-import com.example.user.weather.view.CalendarView;
 import icepick.State;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 import javax.inject.Inject;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -46,6 +40,8 @@ public class MainFragment extends FragmentBase {
 
     @Inject
     GeoLogic geoLogic;
+
+    private WeatherRecycleAdapter<MainEntity> adapter;
 
     public static MainFragment newInstance(GeoEntity geo) {
         Bundle args = new Bundle();
@@ -72,6 +68,14 @@ public class MainFragment extends FragmentBase {
         final FragmentMainBinding binding = FragmentMainBinding.bind(view);
         appComponent().inject(this);
 
+        this.adapter = new WeatherRecycleAdapter<>(new ArrayList<>());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        layoutManager.scrollToPosition(0);
+        binding.recyclerView.setLayoutManager(layoutManager);
+        binding.recyclerView.setAdapter(adapter);
+        binding.recyclerView.setHasFixedSize(true);
+
         Observer observer = new Observer<InformationEntity<MainEntity>>() {
 
             @Override
@@ -83,8 +87,11 @@ public class MainFragment extends FragmentBase {
             }
 
             @Override
-            public void onNext(InformationEntity information) {
+            public void onNext(InformationEntity<MainEntity> information) {
                 binding.setInformation(information);
+                adapter.addAllItem(information.getList());
+                adapter.notifyDataSetChanged();
+
                 Observer observer_2 = new Observer<List<GeoEntity>>() {
 
                     @Override
