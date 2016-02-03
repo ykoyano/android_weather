@@ -90,11 +90,13 @@ public class MainActivity extends ActivityBase implements ViewPager.OnPageChange
     @Override
     protected void onNewIntent(Intent intent) {
         if (intent.getSerializableExtra(KEY_GEO) != null) {
+            if(binding.tabLayout.getTabCount() > this.geos.size()){
+                binding.tabLayout.removeTabAt(this.geos.size());
+            }
             GeoEntity geoEntity = (GeoEntity) intent.getSerializableExtra(KEY_GEO);
-            SubFragmentPagerAdapter adapter = (SubFragmentPagerAdapter) binding.viewPager.getAdapter();
-            adapter.add(geoEntity.getCity(), MainFragment.newInstance(geoEntity));
-            this.adapter.remove(0);
+            this.adapter.add(geoEntity.getCity(), MainFragment.newInstance(geoEntity));
             this.adapter.notifyDataSetChanged();
+            binding.tabLayout.addTab(binding.tabLayout.newTab().setText(geoEntity.getCity()));
         }
     }
 

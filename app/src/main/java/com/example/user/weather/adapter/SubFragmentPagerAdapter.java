@@ -7,10 +7,6 @@ import android.support.v4.app.FragmentManager;
 
 public class SubFragmentPagerAdapter extends DynamicFragmentPagerAdapter {
 
-    public SubFragmentPagerAdapter(FragmentManager fm) {
-        super(fm);
-    }
-
     public SubFragmentPagerAdapter(FragmentManager fm, Map<CharSequence, Fragment> fragments) {
         super(fm, fragments);
     }
