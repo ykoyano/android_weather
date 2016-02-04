@@ -1,6 +1,7 @@
 package com.example.user.weather.logic;
 
 import com.example.user.weather.model.weather.InformationEntity;
+import com.example.user.weather.model.weather.LongInformationEntity;
 import com.example.user.weather.request.WeatherApi;
 import rx.Observable;
 
@@ -18,7 +19,12 @@ public class WeatherLogicImpl implements WeatherLogic {
     }
 
     @Override
-    public Observable<InformationEntity> getWeather(double lon, double lat) {
+    public Observable<InformationEntity> getDailyWeather(double lon, double lat) {
         return weatherApi.getWeather(lon, lat, APP_ID);
+    }
+
+    @Override
+    public Observable<LongInformationEntity> getWeekWeather(double lon, double lat) {
+        return weatherApi.getWeatherWeek(lon, lat, APP_ID);
     }
 }

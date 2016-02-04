@@ -12,7 +12,7 @@ import com.example.user.weather.logic.LocationLogic;
 import com.example.user.weather.logic.WeatherLogic;
 import com.example.user.weather.model.Location;
 import com.example.user.weather.model.weather.InformationEntity;
-import com.example.user.weather.model.weather.MainEntity;
+import com.example.user.weather.model.weather.LongInformationEntity;
 import icepick.State;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -106,7 +106,31 @@ public class MainFragment extends FragmentBase {
             }
         };
 
-        weatherLogic.getWeather(location.getLon(), location.getLat())
+        weatherLogic.getDailyWeather(location.getLon(), location.getLat())
+                .compose(bindToLifecycle())
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
+
+    private void getWeekWeather(){
+        Observer observer = new Observer<LongInformationEntity>() {
+
+            @Override
+            public void onCompleted() {
+            }
+
+            @Override
+            public void onError(Throwable e) {
+            }
+
+            @Override
+            public void onNext(LongInformationEntity longInformation) {
+
+            }
+        };
+
+        weatherLogic.getWeekWeather(location.getLon(), location.getLat())
                 .compose(bindToLifecycle())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())

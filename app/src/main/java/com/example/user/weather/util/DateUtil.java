@@ -6,9 +6,9 @@ import java.util.Date;
 
 public class DateUtil {
 
-    public static Date unixTimeToDate(int unixTime) {
+    public static Date unixTimeToDate(String unixTime) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
-        Date nowTime = new Date(unixTime * 1000L);
+        Date nowTime = new Date(Integer.parseInt(unixTime) * 1000L);
         try {
             return sdf.parse(sdf.format(nowTime));
         } catch (ParseException e) {

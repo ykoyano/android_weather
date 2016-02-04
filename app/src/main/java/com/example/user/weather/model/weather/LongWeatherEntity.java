@@ -2,9 +2,6 @@ package com.example.user.weather.model.weather;
 
 import com.example.user.weather.model.EntityBase;
 import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
-import java.util.List;
 
 public class LongWeatherEntity extends EntityBase {
 
