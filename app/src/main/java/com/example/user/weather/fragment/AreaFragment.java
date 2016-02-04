@@ -43,9 +43,15 @@ public class AreaFragment extends FragmentBase {
         appComponent().inject(this);
 
         binding.toolBar.setTitle(R.string.area);
+        binding.toolBar.inflateMenu(R.menu.select);
         binding.toolBar.setNavigationIcon(R.drawable.ic_arrow_back_48px);
         binding.toolBar.setNavigationOnClickListener(v -> {
             getActivity().finish();
+        });
+
+        binding.toolBar.setOnMenuItemClickListener(menuItem -> {
+            getActivity().finish();
+            return true;
         });
 
         Observer observer = new Observer<List<String>>() {
