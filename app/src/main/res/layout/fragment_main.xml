@@ -4,7 +4,7 @@
         xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable name="geo"
+        <variable name="location"
                   type="com.example.user.weather.model.Location"/>
         <variable name="information"
                   type="com.example.user.weather.model.weather.InformationEntity"/>
@@ -48,7 +48,7 @@
                                 android:layout_height="wrap_content"
                                 android:textAppearance="?android:attr/textAppearanceLarge"
                                 android:id="@+id/text_box"
-                                android:text="@{geo.city}"
+                                android:text="@{location.city}"
                                 android:layout_marginStart="17dp"/>
 
                         <android.support.v7.widget.RecyclerView

@@ -47,8 +47,13 @@ public class SearchActivity extends ActivityBase {
         adapter = new ArrayAdapter<>(getApplicationContext(), R.layout.row_string, new ArrayList<>());
         binding.resultListView.setAdapter(adapter);
 
+        binding.toolBar.setNavigationIcon(R.drawable.ic_arrow_back_48px);
+        binding.toolBar.setNavigationOnClickListener(v -> {
+            finish();
+        });
+
         searchView = (SearchView) binding.toolBar.getMenu().findItem(R.id.menu_search).getActionView();
-        searchView.setQuery(getString(R.string.please_type_area),true);
+        searchView.setQueryHint(getString(R.string.please_type_area));
         searchView.setFocusable(true);
         searchView.setIconified(false);
         searchView.requestFocusFromTouch();
@@ -94,7 +99,7 @@ public class SearchActivity extends ActivityBase {
             }
         });
 
-        binding.selectArea.setOnClickListener(v -> {
+        binding.selectLayout.setOnClickListener(v -> {
             Intent intent = new Intent(this, SelectActivity.class);
             startActivity(intent);
         });

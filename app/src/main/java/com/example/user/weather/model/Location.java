@@ -17,11 +17,11 @@ public class Location extends EntityBase {
 
     @Expose
     @SerializedName("x")
-    private double lat;
-    
+    private double lon;
+
     @Expose
     @SerializedName("y")
-    private double lon;
+    private double lat;
 
     public int getId() {
         return id;

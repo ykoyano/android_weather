@@ -5,6 +5,9 @@
     <string name="history">検索履歴</string>
     <string name="search_result">検索結果</string>
     <string name="select_area">市町村から選択する</string>
+    <string name="area">地方</string>
+    <string name="prefecture">都道府県</string>
+    <string name="city">市町村</string>
     <string name="current_location">現在地の天気を見る</string>
     <string name="sunday">日</string>
     <string name="monday">月</string>

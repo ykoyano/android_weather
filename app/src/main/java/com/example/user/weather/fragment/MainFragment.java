@@ -79,14 +79,14 @@ public class MainFragment extends FragmentBase {
         binding.recyclerView.setAdapter(adapter);
         binding.recyclerView.setHasFixedSize(true);
 
-        getWeather();
+        getDailyWeather();
 
         HashSet<Date> events = new HashSet<>();
         events.add(new Date());
         binding.calendarView.updateCalendar(events);
     }
 
-    private void getWeather(){
+    private void getDailyWeather(){
         Observer observer = new Observer<InformationEntity>() {
 
             @Override
@@ -151,7 +151,7 @@ public class MainFragment extends FragmentBase {
 
             @Override
             public void onNext(List<Location> locations) {
-                binding.setGeo(locations.get(0));
+                binding.setLocation(locations.get(0));
             }
         };
 

@@ -42,6 +42,12 @@ public class AreaFragment extends FragmentBase {
         final FragmentAreaBinding binding = FragmentAreaBinding.bind(view);
         appComponent().inject(this);
 
+        binding.toolBar.setTitle(R.string.area);
+        binding.toolBar.setNavigationIcon(R.drawable.ic_arrow_back_48px);
+        binding.toolBar.setNavigationOnClickListener(v -> {
+            getActivity().finish();
+        });
+
         Observer observer = new Observer<List<String>>() {
 
             @Override

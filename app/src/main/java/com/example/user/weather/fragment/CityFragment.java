@@ -67,6 +67,12 @@ public class CityFragment extends FragmentBase {
         binding = FragmentCityBinding.bind(view);
         appComponent().inject(this);
 
+        binding.toolBar.setTitle(R.string.city);
+        binding.toolBar.setNavigationIcon(R.drawable.ic_arrow_back_48px);
+        binding.toolBar.setNavigationOnClickListener(v -> {
+            getActivity().getSupportFragmentManager().popBackStack();
+        });
+
         Observer observer = new Observer<List<Location>>() {
 
             @Override

@@ -56,6 +56,12 @@ public class PrefectureFragment extends FragmentBase{
         binding = FragmentPrefectureBinding.bind(view);
         appComponent().inject(this);
 
+        binding.toolBar.setTitle(R.string.prefecture);
+        binding.toolBar.setNavigationIcon(R.drawable.ic_arrow_back_48px);
+        binding.toolBar.setNavigationOnClickListener(v -> {
+            getActivity().getSupportFragmentManager().popBackStack();
+        });
+
         getPrefectures();
 
         binding.listView.setOnItemClickListener((parent, listenerView, position, id) -> {
