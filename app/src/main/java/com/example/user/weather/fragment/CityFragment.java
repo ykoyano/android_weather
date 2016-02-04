@@ -110,7 +110,7 @@ public class CityFragment extends FragmentBase {
 
             @Override
             public void onNext(List<Location> locations) {
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext().getApplicationContext(), android.R.layout.simple_list_item_1, LocationUtil.toStringArray(locations));
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext().getApplicationContext(), R.layout.row_string, LocationUtil.toStringArray(locations));
                 binding.listView.setAdapter(adapter);
             }
         };

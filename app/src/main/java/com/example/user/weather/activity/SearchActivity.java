@@ -44,7 +44,7 @@ public class SearchActivity extends ActivityBase {
 
         binding = bindContentView(this, R.layout.activity_search);
         binding.toolBar.inflateMenu(R.menu.search);
-        adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, new ArrayList<>());
+        adapter = new ArrayAdapter<>(getApplicationContext(), R.layout.row_string, new ArrayList<>());
         binding.resultListView.setAdapter(adapter);
 
         searchView = (SearchView) binding.toolBar.getMenu().findItem(R.id.menu_search).getActionView();

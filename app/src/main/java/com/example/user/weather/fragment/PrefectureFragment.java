@@ -79,7 +79,7 @@ public class PrefectureFragment extends FragmentBase{
 
             @Override
             public void onNext(List<String> prefectures) {
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext().getApplicationContext(), android.R.layout.simple_list_item_1, prefectures);
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext().getApplicationContext(), R.layout.row_string, prefectures);
                 binding.listView.setAdapter(adapter);
             }
         };

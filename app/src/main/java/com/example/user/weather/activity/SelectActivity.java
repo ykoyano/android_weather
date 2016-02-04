@@ -25,7 +25,5 @@ public class SelectActivity extends ActivityBase {
             transaction.add(R.id.fragment_container, new AreaFragment(), AreaFragment.TAG);
             transaction.commit();
         }
-
     }
-
 }

@@ -54,7 +54,7 @@ public class AreaFragment extends FragmentBase {
 
             @Override
             public void onNext(List<String> cities) {
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext().getApplicationContext(), android.R.layout.simple_list_item_1, cities);
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext().getApplicationContext(), R.layout.row_string, cities);
                 binding.listView.setAdapter(adapter);
             }
         };

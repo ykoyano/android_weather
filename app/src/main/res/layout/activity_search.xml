@@ -17,16 +17,34 @@
         </android.support.v7.widget.Toolbar>
 
         <LinearLayout android:id="@+id/select_layout"
-                      android:orientation="vertical"
+                      android:orientation="horizontal"
                       android:layout_width="match_parent"
-                      android:layout_height="match_parent"
+                      android:layout_height="wrap_content"
+                      android:padding="20dp"
+                      android:gravity="center_vertical"
+                      android:background="@drawable/border_bottom"
                       tools:context=".activity.SearchActivity">
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginLeft="-10dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/map"/>
 
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/select_area"
-                    android:text="@string/select_area"/>
+                    android:text="@string/select_area"
+                    android:layout_weight="1"
+                    android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+            <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="end"
+                    android:src="@drawable/arrow"/>
 
         </LinearLayout>
 
@@ -38,10 +56,16 @@
                       android:visibility="gone">
 
             <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/search_result"
-                    android:text="@string/search_result"/>
+                    android:text="@string/search_result"
+                    android:textColor="#000000"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="10dp"
+                    android:background="@color/greyed_out"
+                    android:textSize="18sp"/>
 
             <ListView
                     android:id="@+id/result_list_view"
