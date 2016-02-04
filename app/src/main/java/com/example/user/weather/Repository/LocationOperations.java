@@ -14,7 +14,7 @@ public class LocationOperations {
 
     private DataBaseWrapper dbHelper;
     private String[] LOCATION_TABLE_COLUMNS =
-            { DataBaseWrapper.LOCATION_ID, DataBaseWrapper.LOCATION_CITY, DataBaseWrapper.LOCATION_TOWN, DataBaseWrapper.LOCATION_LAT, DataBaseWrapper.LOCATION_LON };
+            { DataBaseWrapper.LOCATION_ID, DataBaseWrapper.LOCATION_CITY, DataBaseWrapper.LOCATION_TOWN, DataBaseWrapper.LOCATION_LON, DataBaseWrapper.LOCATION_LAT};
     private SQLiteDatabase database;
 
     public LocationOperations(Context context) {

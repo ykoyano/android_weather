@@ -38,7 +38,7 @@ public class WeatherRecycleAdapter extends RecyclerView.Adapter<WeatherRecycleAd
     public void onBindViewHolder(BindingHolder holder, int position) {
         final WeatherEntity weather = weathers.get(position);
         holder.getBinding().setWeather(weather);
-        holder.getBinding().weatherTemp.setText(WeatherUtil.totringTemperature(weather.getMain().getTemp()));
+        holder.getBinding().weatherTemp.setText(WeatherUtil.toStringTemperature(weather.getMain().getTemp()));
 
         if(position == 0){
             holder.getBinding().weatherTime.setText(NOW );

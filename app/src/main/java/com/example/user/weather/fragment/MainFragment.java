@@ -105,7 +105,7 @@ public class MainFragment extends FragmentBase {
                 adapter.addAllItem(information.getList());
                 adapter.notifyDataSetChanged();
                 binding.weatherImage.setImageResource(WeatherUtil.getIconResource(information.getList().get(0).getIcon().get(0).getIcon()));
-                binding.tempText.setText(WeatherUtil.totringTemperature(information.getList().get(0).getMain().getTemp()));
+                binding.tempText.setText(WeatherUtil.toStringTemperature(information.getList().get(0).getMain().getTemp()));
             }
         };
 
