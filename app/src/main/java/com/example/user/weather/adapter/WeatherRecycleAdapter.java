@@ -15,7 +15,8 @@ import java.util.List;
 
 public class WeatherRecycleAdapter extends RecyclerView.Adapter<WeatherRecycleAdapter.BindingHolder> {
 
-    private static final double KELVIN = 273.15f;
+    private static final String TIME =  "時";
+    private static final String NOW =  "現在";
 
     private List<WeatherEntity> weathers;
 
@@ -37,8 +38,14 @@ public class WeatherRecycleAdapter extends RecyclerView.Adapter<WeatherRecycleAd
     public void onBindViewHolder(BindingHolder holder, int position) {
         final WeatherEntity weather = weathers.get(position);
         holder.getBinding().setWeather(weather);
-        holder.getBinding().weatherTemp.setText(String.valueOf((int) (weather.getMain().getTemp() - KELVIN)));
-        holder.getBinding().weatherTime.setText(String.valueOf(DateUtil.unixTimeToDate((weather.getDt())).getHours()));
+        holder.getBinding().weatherTemp.setText(WeatherUtil.totringTemperature(weather.getMain().getTemp()));
+
+        if(position == 0){
+            holder.getBinding().weatherTime.setText(NOW );
+        }else {
+            holder.getBinding().weatherTime.setText(String.valueOf(DateUtil.unixTimeToDate((weather.getDt())).getHours()) + TIME);
+        }
+
         holder.getBinding().weatherImage.setImageResource(WeatherUtil.getIconResource(weather.getIcon().get(0).getIcon()));
         holder.getBinding().executePendingBindings();
     }

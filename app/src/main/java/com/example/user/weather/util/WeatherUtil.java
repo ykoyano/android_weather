@@ -4,6 +4,13 @@ import com.example.user.weather.R;
 
 public class WeatherUtil {
 
+    private static final String CELSIUS =  "℃";
+    private static final double KELVIN = 273.15f;
+
+    public static String totringTemperature(double temp){
+        return String.valueOf((int) temp - KELVIN + CELSIUS);
+    }
+
     public static int getIconResource(String icon) {
         switch (icon) {
         case "01d":
