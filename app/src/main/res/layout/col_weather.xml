@@ -7,13 +7,13 @@
                   type="com.example.user.weather.model.weather.WeatherEntity"/>
     </data>
 
-    <LinearLayout android:layout_width="match_parent"
+    <LinearLayout android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:gravity="center_vertical"
                   android:padding="10dp"
                   android:orientation="vertical">
 
-        <TextView android:layout_width="match_parent"
+        <TextView android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:minHeight="35dp"
                   android:id="@+id/weather_temp"
@@ -22,7 +22,7 @@
                   android:textAlignment="center"
                   android:text="00"/>
 
-        <TextView android:layout_width="match_parent"
+        <TextView android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:minHeight="35dp"
                   android:id="@+id/weather_time"

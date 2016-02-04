@@ -13,6 +13,7 @@ import com.example.user.weather.logic.WeatherLogic;
 import com.example.user.weather.model.Location;
 import com.example.user.weather.model.weather.InformationEntity;
 import com.example.user.weather.model.weather.LongInformationEntity;
+import com.example.user.weather.util.WeatherUtil;
 import icepick.State;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -103,6 +104,7 @@ public class MainFragment extends FragmentBase {
                 binding.setInformation(information);
                 adapter.addAllItem(information.getList());
                 adapter.notifyDataSetChanged();
+                binding.weatherImage.setImageResource(WeatherUtil.getIconResource(information.getList().get(0).getIcon().get(0).getIcon()));
             }
         };
 
