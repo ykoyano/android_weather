@@ -35,11 +35,9 @@ public class MainActivity extends ActivityBase {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getApplicationComponent().inject(this);
-
         binding = bindContentView(this, R.layout.activity_main);
 
         binding.toolBar.inflateMenu(R.menu.main_menu);
-
         binding.toolBar.setOnMenuItemClickListener(item -> {
             switch (item.getItemId()) {
             case R.id.search_icon:
@@ -50,6 +48,10 @@ public class MainActivity extends ActivityBase {
         });
 
         locations = locationLogic.findAll();
+        if(locations.size() == 0) {
+            Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+            startActivity(intent);
+        }
 
         HashMap<CharSequence, Fragment> fragments = new HashMap<>();
         for (Location location : locations) {
@@ -73,11 +75,4 @@ public class MainActivity extends ActivityBase {
             binding.tabLayout.addTab(binding.tabLayout.newTab().setText(location.getCity()));
         }
     }
-
-//    private List<Location> getTestData() {
-//        List<Location> cities = new ArrayList<>();
-//        cities.add(new Location(0, "さいたま", "110010", 139.569754, 35.8777));
-//        cities.add(new Location(0, "栃木", "110010", 139.748078, 36.465153));
-//        return cities;
-//    }
 }

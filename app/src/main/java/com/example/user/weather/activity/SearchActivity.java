@@ -46,7 +46,13 @@ public class SearchActivity extends ActivityBase {
         binding.toolBar.inflateMenu(R.menu.search);
         adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, new ArrayList<>());
         binding.resultListView.setAdapter(adapter);
+
         searchView = (SearchView) binding.toolBar.getMenu().findItem(R.id.menu_search).getActionView();
+        searchView.setQuery(getString(R.string.please_type_area),true);
+        searchView.setFocusable(true);
+        searchView.setIconified(false);
+        searchView.requestFocusFromTouch();
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
             @Override

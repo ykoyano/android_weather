@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Weather</string>
+    <string name="please_type_area">地名を入力して下さい</string>
     <string name="menu_search">検索</string>
     <string name="history">検索履歴</string>
     <string name="search_result">検索結果</string>
