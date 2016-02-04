@@ -11,10 +11,12 @@ import com.example.user.weather.databinding.FragmentMainBinding;
 import com.example.user.weather.logic.LocationLogic;
 import com.example.user.weather.logic.WeatherLogic;
 import com.example.user.weather.model.Location;
+import com.example.user.weather.model.weather.DayEntity;
 import com.example.user.weather.model.weather.InformationEntity;
 import com.example.user.weather.model.weather.LongInformationEntity;
 import com.example.user.weather.util.WeatherUtil;
 import icepick.State;
+import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -81,10 +83,7 @@ public class MainFragment extends FragmentBase {
         binding.recyclerView.setHasFixedSize(true);
 
         getDailyWeather();
-
-        HashSet<Date> events = new HashSet<>();
-        events.add(new Date());
-        binding.calendarView.updateCalendar(events);
+        getWeekWeather();
     }
 
     private void getDailyWeather(){
@@ -129,7 +128,7 @@ public class MainFragment extends FragmentBase {
 
             @Override
             public void onNext(LongInformationEntity longInformation) {
-
+                binding.calendarView.updateCalendar(longInformation.getList());
             }
         };
 

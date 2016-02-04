@@ -9,17 +9,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.example.user.weather.R;
 import com.example.user.weather.databinding.CalendarBinding;
+import com.example.user.weather.model.weather.DayEntity;
+import com.example.user.weather.util.WeatherUtil;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 
-public class CalendarAdapter extends ArrayAdapterBase<Date> {
+public class CalendarAdapter extends ArrayAdapterBase<DayEntity> {
 
-    private HashSet<Date> eventDays;
-
-    public CalendarAdapter(Context context, HashSet<Date> eventDays) {
+    public CalendarAdapter(Context context) {
         super(context, -1);
-        this.eventDays = eventDays;
     }
 
     @Override
@@ -34,7 +34,8 @@ public class CalendarAdapter extends ArrayAdapterBase<Date> {
             binding = (CalendarBinding) view.getTag();
         }
 
-        Date date = getItem(position);
+        DayEntity dayEntity = getItem(position);
+        Date date = dayEntity.getDate();
         int day = date.getDate();
         int month = date.getMonth();
         int year = date.getYear();
@@ -42,18 +43,23 @@ public class CalendarAdapter extends ArrayAdapterBase<Date> {
         Date today = new Date();
 
         binding.textView.setBackgroundResource(0);
-        if (eventDays != null) {
-            for (Date eventDate : eventDays) {
-                if (eventDate.getDate() == day &&
-                        eventDate.getMonth() == month &&
-                        eventDate.getYear() == year) {
-                    break;
-                }
-            }
-        }
+
+//        if (eventDays != null) {
+//            for (Date eventDate : eventDays) {
+//                if (eventDate.getDate() == day &&
+//                        eventDate.getMonth() == month &&
+//                        eventDate.getYear() == year) {
+//                    break;
+//                }
+//            }
+//        }
 
         binding.textView.setTypeface(null, Typeface.NORMAL);
         binding.textView.setTextColor(Color.BLACK);
+
+        if (dayEntity.getLongWeatherEntity() != null) {
+            binding.weatherImage.setImageResource(WeatherUtil.getIconResource(dayEntity.getLongWeatherEntity().getIcon().get(0).getIcon()));
+        }
 
         if (day == today.getDate()) {
             binding.textView.setTypeface(null, Typeface.BOLD);

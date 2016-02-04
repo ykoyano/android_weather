@@ -20,7 +20,7 @@
                   android:text="00"/>
 
         <ImageView
-                android:id="@+id/calendar_prev_button"
+                android:id="@+id/weather_image"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_gravity="center"

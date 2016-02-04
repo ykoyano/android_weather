@@ -9,16 +9,22 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.example.user.weather.R;
 import com.example.user.weather.adapter.CalendarAdapter;
+import com.example.user.weather.model.weather.DayEntity;
+import com.example.user.weather.model.weather.LongWeatherEntity;
+import com.example.user.weather.model.weather.WeatherEntity;
+import com.example.user.weather.util.DateUtil;
+import org.apache.commons.lang3.time.DateUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 
 public class CalendarView extends LinearLayout {
 
-    private static final int DAYS_COUNT = 42;
+    private static final int DAYS_COUNT = 21;
 
     private static final String DATE_FORMAT = "MMM yyyy";
 
@@ -54,7 +60,7 @@ public class CalendarView extends LinearLayout {
         assignUiElements();
         assignClickHandlers();
 
-        updateCalendar();
+//        updateCalendar();
     }
 
     private void loadDateFormat(AttributeSet attrs) {
@@ -89,8 +95,9 @@ public class CalendarView extends LinearLayout {
         updateCalendar(null);
     }
 
-    public void updateCalendar(HashSet<Date> events) {
-        ArrayList<Date> cells = new ArrayList<>();
+    public void updateCalendar(List<LongWeatherEntity> longWeatherList) {
+
+        ArrayList<DayEntity> dayList = new ArrayList<>();
         Calendar calendar = (Calendar) currentDate.clone();
 
         calendar.set(Calendar.DAY_OF_MONTH, 1);
@@ -98,13 +105,24 @@ public class CalendarView extends LinearLayout {
 
         calendar.add(Calendar.DAY_OF_MONTH, -monthBeginningCell);
 
-        while (cells.size() < DAYS_COUNT) {
-            cells.add(calendar.getTime());
+        while (dayList.size() < DAYS_COUNT) {
+            Date cell = DateUtils.truncate(calendar.getTime(), Calendar.DAY_OF_MONTH);
+            if (longWeatherList.size() > 0) {
+                LongWeatherEntity longWeatherEntity = longWeatherList.get(0);
+                Date weather = DateUtils.truncate(DateUtil.unixTimeToDate(longWeatherEntity.getDt()), Calendar.DAY_OF_MONTH);
+                if (weather.compareTo(cell) == 0) {
+                    dayList.add(new DayEntity(cell, longWeatherEntity));
+                    longWeatherList.remove(0);
+                    calendar.add(Calendar.DAY_OF_MONTH, 1);
+                    continue;
+                }
+            }
+            dayList.add(new DayEntity(cell, null));
             calendar.add(Calendar.DAY_OF_MONTH, 1);
         }
 
-        CalendarAdapter adapter = new CalendarAdapter(getContext(), events);
-        adapter.addAll(cells);
+        CalendarAdapter adapter = new CalendarAdapter(getContext());
+        adapter.addAll(dayList);
         grid.setAdapter(adapter);
 
         SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);

@@ -25,10 +25,6 @@ public class TempEntity extends EntityBase {
     @Expose
     private double min;
 
-    @Expose
-    @SerializedName("weather")
-    private List<IconEntity> icon;
-
     public double getDay() {
         return day;
     }
@@ -67,13 +63,5 @@ public class TempEntity extends EntityBase {
 
     public void setMin(double min) {
         this.min = min;
-    }
-
-    public List<IconEntity> getIcon() {
-        return icon;
-    }
-
-    public void setIcon(List<IconEntity> icon) {
-        this.icon = icon;
     }
 }

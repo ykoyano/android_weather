@@ -16,5 +16,5 @@ public interface WeatherApi {
     Observable<InformationEntity> getWeather(@Query("lon") final double lon, @Query("lat") final double lat, @Query("appid") final String appId);
 
     @GET("/data/2.5/forecast/daily")
-    Observable<LongInformationEntity> getWeatherWeek(@Query("lon") final double lon, @Query("lat") final double lat, @Query("appid") final String appId);
+    Observable<LongInformationEntity> getWeatherWeek(@Query("lon") final double lon, @Query("lat") final double lat, @Query("appid") final String appId, @Query("cnt") final int cnt);
 }

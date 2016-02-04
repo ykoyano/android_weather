@@ -53,7 +53,7 @@ public class MainActivity extends ActivityBase {
 
 //      locations = locationLogic.findAll();
         locations = new ArrayList<>();
-        
+
         HashMap<CharSequence, Fragment> fragments = new HashMap<>();
         for (Location location : locations) {
             fragments.put(location.getCity(), MainFragment.newInstance(location));

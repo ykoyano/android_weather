@@ -10,6 +10,7 @@ import javax.inject.Inject;
 public class WeatherLogicImpl implements WeatherLogic {
 
     private static final String APP_ID = "9da45a992a7fa31176ad812fe56581f2";
+    private static final int MAX_COUNT = 16;
 
     private WeatherApi weatherApi;
 
@@ -25,6 +26,6 @@ public class WeatherLogicImpl implements WeatherLogic {
 
     @Override
     public Observable<LongInformationEntity> getWeekWeather(double lon, double lat) {
-        return weatherApi.getWeatherWeek(lon, lat, APP_ID);
+        return weatherApi.getWeatherWeek(lon, lat, APP_ID, MAX_COUNT);
     }
 }
