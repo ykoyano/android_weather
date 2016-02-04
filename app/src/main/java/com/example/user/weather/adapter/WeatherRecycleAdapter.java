@@ -36,7 +36,7 @@ public class WeatherRecycleAdapter extends RecyclerView.Adapter<WeatherRecycleAd
     public void onBindViewHolder(BindingHolder holder, int position) {
         final WeatherEntity weather = weathers.get(position);
         holder.getBinding().setWeather(weather);
-        holder.getBinding().weatherTemp.setText(String.valueOf(weather.getMain().getTemp() - KELVIN));
+        holder.getBinding().weatherTemp.setText(String.valueOf((int)(weather.getMain().getTemp() - KELVIN)));
         holder.getBinding().weatherTime.setText(String.valueOf(DateUtil.unixTimeToDate((weather.getDt())).getHours()));
 
         switch (weather.getIcon().get(0).getIcon()) {

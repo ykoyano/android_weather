@@ -9,6 +9,7 @@
     <string name="prefecture">都道府県</string>
     <string name="city">市町村</string>
     <string name="current_location">現在地の天気を見る</string>
+    <string name="today">今日</string>
     <string name="sunday">日</string>
     <string name="monday">月</string>
     <string name="tuesday">火</string>
