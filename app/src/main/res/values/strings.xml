@@ -17,4 +17,6 @@
     <string name="thursday">木</string>
     <string name="friday">金</string>
     <string name="saturday">土</string>
+    <string name="introduction_title">ダウンロードありがとうございます!</string>
+    <string name="introduction_content">天気が知りたい地名を入力して下さい</string>
 </resources>

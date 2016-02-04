@@ -1,8 +1,11 @@
 package com.example.user.weather.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.user.weather.R;
 import com.example.user.weather.adapter.SubFragmentPagerAdapter;
 import com.example.user.weather.databinding.ActivityMainBinding;
@@ -20,6 +23,7 @@ public class MainActivity extends ActivityBase {
     private static final String TAG = MainActivity.class.getSimpleName();
 
     private static final String KEY_LOCATION = "location";
+    private static final String INIT_STATE = "initState";
 
     private ActivityMainBinding binding;
 
@@ -47,12 +51,9 @@ public class MainActivity extends ActivityBase {
             return true;
         });
 
-        locations = locationLogic.findAll();
-        if(locations.size() == 0) {
-            Intent intent = new Intent(MainActivity.this, SearchActivity.class);
-            startActivity(intent);
-        }
-
+//      locations = locationLogic.findAll();
+        locations = new ArrayList<>();
+        
         HashMap<CharSequence, Fragment> fragments = new HashMap<>();
         for (Location location : locations) {
             fragments.put(location.getCity(), MainFragment.newInstance(location));
@@ -60,6 +61,29 @@ public class MainActivity extends ActivityBase {
         this.adapter = new SubFragmentPagerAdapter(getSupportFragmentManager(),fragments);
         binding.viewPager.setAdapter(adapter);
         binding.tabLayout.setupWithViewPager(binding.viewPager);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (!getInitState()) {
+            new MaterialDialog.Builder(this)
+                    .title(R.string.introduction_title)
+                    .content(R.string.introduction_content)
+                    .onAny((dialog, which) -> {
+                        setInitState();
+                        Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+                        startActivity(intent);
+                    }).show();
+        } else if (locations.size() == 0) {
+            new MaterialDialog.Builder(this)
+                    .title(R.string.introduction_title)
+                    .content(R.string.introduction_content)
+                    .onAny((dialog, which) -> {
+                        Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+                        startActivity(intent);
+                    }).show();
+        }
     }
 
     @Override
@@ -74,5 +98,15 @@ public class MainActivity extends ActivityBase {
             this.adapter.notifyDataSetChanged();
             binding.tabLayout.addTab(binding.tabLayout.newTab().setText(location.getCity()));
         }
+    }
+
+    private void setInitState() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        sharedPreferences.edit().putBoolean(INIT_STATE, false).commit();
+    }
+
+    private boolean getInitState() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        return sharedPreferences.getBoolean(INIT_STATE, true);
     }
 }
